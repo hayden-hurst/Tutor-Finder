@@ -10,7 +10,7 @@ let url = 'mongodb://localhost:27017/TutorApp'
 //app.set('view engine')
 const mongoUri = 'mongodb+srv://admin1:admin1@cluster0.htsmz.mongodb.net/TutorApp?retryWrites=true&w=majority&appName=Cluster0'
 
-mongoose.connect(mongoUrl)
+mongoose.connect(mongoUri)
 .then(() => {
     app.listen(port, host, () => {
         console.log('Server is running on port', port);
