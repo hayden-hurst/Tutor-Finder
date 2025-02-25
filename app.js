@@ -8,7 +8,6 @@ const app = express();
 let port = 3000;
 let host = 'localhost';
 let url = 'mongodb://localhost:27017/TutorApp'
-//app.set('view engine')
 const mongoUri = 'mongodb+srv://admin1:admin1@cluster0.htsmz.mongodb.net/TutorApp?retryWrites=true&w=majority&appName=Cluster0'
 
 mongoose.connect(mongoUri)
