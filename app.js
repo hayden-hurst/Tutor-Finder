@@ -17,3 +17,32 @@ mongoose.connect(mongoUri)
     });
 })
 .catch (err => console.log(err.message));
+
+// Sessions
+app.use((req, res, next) => {
+    res.locals.user = req.session.user||null;
+    res.locals.errorMessages = req.flash('error');
+    res.locals.successMessages = req.flash('success');
+    next();
+});
+
+app.use(express.static('public'));
+app.use(express.urlencoded({extended: true}));
+
+// Error Handlers
+
+app.use((req, res, next) => {
+    let err = new Error('The server cannot locate ' + req.url);
+    err.status = 404;
+    next(err);
+});
+
+app.use((err, req, res, next) => {
+    console.log(err.stack);
+    if(!err.status) {
+        err.status = 500;
+        err.message = ("Internal Server Error");
+    }
+    res.status(err.status);
+    res.render('error', {error: err});
+});
