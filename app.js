@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo');
 const session = require('express-session');
 
 const app = express();
@@ -19,12 +20,15 @@ mongoose.connect(mongoUri)
 .catch (err => console.log(err.message));
 
 // Sessions
-app.use((req, res, next) => {
-    res.locals.user = req.session.user||null;
-    res.locals.errorMessages = req.flash('error');
-    res.locals.successMessages = req.flash('success');
-    next();
-});
+app.use(
+    session({
+        secret: "ihqfbJAFFIU91ASFH",
+        resave: false,
+        saveUninitialized: false,
+        store: new MongoStore({mongoUrl: mongoUri}),
+        cookie: {maxAge: 60*60*1000}
+    })
+);
 
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
