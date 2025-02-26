@@ -5,26 +5,6 @@ body {
     padding: 0;
     background-color: #f5f5dc;
 }
-.navbar {
-    background-color: #2f4f30;
-    color: white;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.navbar a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-}
-.header {
-    background-color: #a5a57a;
-    text-align: center;
-    padding: 20px;
-    font-size: 24px;
-    font-weight: bold;
-}
 .tutor-list {
     width: 60%;
     margin: 20px auto;
@@ -48,4 +28,149 @@ body {
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+/* Ensure body and html take full height */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 50px;
+    background-color: #005035;
+    border-bottom: 1px solid black;
+    color: #ffffff;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    z-index: 1000; 
+}
+
+/* Navigation menu */
+nav ul {
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    margin: 0 10px;
+    padding: 10px;
+    display: inline-block;
+}
+
+nav ul li :hover {
+    color:#F1E6B2
+}
+
+/* Ensure main fills space without overlap */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); /* Adjusted to leave space for header */
+    padding: 20px; /* Ensures space below header */
+    box-sizing: border-box;
+}
+
+.signup {
+    background-color: #A49665;
+    padding: 25px 50px 50px;
+    border-radius: 15px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 5px 5px 5px #888888;
+    box-sizing: border-box;
+    position: relative; /* Changed from absolute */
+}
+
+/* Form elements */
+.signup h2, .signup p {
+    text-align: center;
+    font-weight: bold;
+}
+
+.signup h2 {
+    font-size: 30px;
+}
+
+.button {
+    background-color: black;
+    color: white;
+    padding: 10px 50px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: medium;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"],
+select {
+    padding: 10px;
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #007377;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    nav ul li {
+        display: block;
+        padding: 5px 0;
+    }
+
+    main {
+        align-items: flex-start;
+        padding-top: 100px; /* Increased padding to push content */
+    }
 }
