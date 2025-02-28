@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova software development project</title>
+    <link rel="stylesheet" href="/styles/default.css">
+</head>
+<body>    
+    <header>
+        <h1>Tutor Finder</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="./calendar.html">Calendar</a></li>
+                <li><a href="./profile.html">Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="signup">
+            <h2>Create profile</h2>
+            <p>or<a href="login.html"> Sign In</p></a>
+            <form action="">
+                <label for="first">First Name:</label>
+                <input type="text" id="first" placeholder="Norm" required>
+                <label for="last">Last Name:</label>
+                <input type="text" id="last" placeholder="Niner" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="norm@charlotte.edu" required>
+                <label for="year">Year:</label>
+                <select name="year" id="year">
+                    <option value="freshman">Freshman</option>
+                    <option value="sophomore">Sophomore</option>
+                    <option value="junior">Junior</option>
+                    <option value="senior">Senior</option>
+                    <option value="Grad">Graduate Student</option>
+                </select>
+                <label for="major">Major:</label>
+                <input type="text" id="major" placeholder="Computer Science" required>
+                <label for="bio">Bio (optional)</label>
+                <textarea name="bio" id="bio" cols="30" rows="10"></textarea>
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="password123" required>
+                <input type="checkbox" name="remember" value="Remember me">Remember me
+                <br>
+                <input type="submit" value="Create" class="button">
+            </form>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>
