@@ -1,3 +1,12 @@
+/* 005035-A49665-FFFFFF-F1E6B2-899064-802F2D-007377-101820 */
+/* CHARLOTTE GREEN #005035 */
+/* NINER GOLD #A49665 */
+/* QUARTZ WHITE #FFFFFF */
+/* JASPER #F1E6B2 */
+/* PINE GREEN #899064 */
+/* CLAY RED #802F2D */
+/* SKY BLUE #007377 */
+/* ORE BLACK #101820 */
 
 body {
     font-family: Arial, sans-serif;
@@ -12,7 +21,7 @@ body {
 .tutor {
     display: flex;
     align-items: center;
-    background-color: #eee4b8;
+    background-color: #F1E6B2;
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 8px;
@@ -53,6 +62,10 @@ header {
     z-index: 1000; 
 }
 
+footer {
+    padding: 50px 50px;
+}
+
 /* Navigation menu */
 nav ul {
     display: flex;
@@ -75,29 +88,28 @@ nav ul li a {
 }
 
 nav ul li :hover {
-    color:#F1E6B2
+    color:#A49665;
 }
 
-/* Ensure main fills space without overlap */
 main {
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 80px); /* Adjusted to leave space for header */
-    padding: 20px; /* Ensures space below header */
+    align-items: flex-start; /* Align to top instead of center */
+    min-height: calc(100vh - 80px); /* Leaves space for header */
+    padding: 100px 20px 50px; /* Added bottom padding */
     box-sizing: border-box;
 }
 
 .signup {
-    background-color: #A49665;
+    margin-top: 20px; /* Pushes it down from the header */
     padding: 25px 50px 50px;
+    background-color: #A49665;
     border-radius: 15px;
     max-width: 500px;
     width: 100%;
     box-shadow: 5px 5px 5px #888888;
     box-sizing: border-box;
-    position: relative; /* Changed from absolute */
 }
 
 /* Form elements */
@@ -108,6 +120,14 @@ main {
 
 .signup h2 {
     font-size: 30px;
+}
+
+.signup a {
+    color: #005035;
+}
+
+.signup a:hover {
+    color: #802F2D;
 }
 
 .button {
@@ -129,6 +149,7 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="password"],
+textarea,
 select {
     font-size: 16px;
     padding: 10px;
@@ -138,6 +159,22 @@ select {
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
+    display: block;
+    height: 40px; /* Ensures uniform height */
+}
+
+#year {
+    width: 100%;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+textarea {
+    width: 100%;
+    max-width: 400px;
 }
 
 input[type="checkbox"],
@@ -149,6 +186,14 @@ select {
 a {
     text-decoration: none;
     color: #007377;
+}
+.tutor-list-container{
+    display: inline-block;
+    width: 50%;
+    margin: 20px auto;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 /* Responsive Design */
