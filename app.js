@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const session = require('express-session');
+const path = require('path');
 
 const app = express();
 
@@ -29,8 +30,14 @@ app.use(
     })
 );
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended: true}));
+
+
+// NOT USING EJS FIND SOMETHING TO RENDER STATIC HTML PAGES
+app.get('/', (req, res) => {
+    res.render('index');
+})
 
 // Error Handlers
 
