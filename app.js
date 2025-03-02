@@ -35,7 +35,7 @@ app.get('/calendar.html', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 
-mongoose.connect(url)
+mongoose.connect(mongoUri)
 .then(() => {
     app.listen(port, host, () => {
         console.log('Server is running on port', port);
