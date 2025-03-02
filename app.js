@@ -20,7 +20,7 @@ app.use(session({
     secret: 'supersecretkey', // replace with process.env.SESSION_SECRET in production
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: url }), // store sessions in MongoDB
+    store: new MongoStore({ mongoUrl: mongoUri }), // store sessions in MongoDB
     cookie: { secure: false } // not secured for local development
 }));
 
