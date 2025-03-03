@@ -4,23 +4,23 @@ const User = require('../models/users.js');
 const router = express.Router();
 
 // Signup
-router.post('/signup', async (req, res) => {
+ router.post('/signup', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { firstName, lastName, email, password, major } = req.body;
 
         // Check if user already exists
         if (await User.findOne({ email })) {
             return res.status(400).json({ error: 'User already exists' });
         }
 
-        const user = new User({ email, password });  // Password will be hashed in the model
+        const user = new User({ firstName, lastName, email, password , major});  // Password will be hashed in the model
         await user.save();
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: 'Server error', details: error.message }); // details is for debugging purposes
     }
-});
+}); 
 
 // Login
 router.post('/login', async (req, res) => {
