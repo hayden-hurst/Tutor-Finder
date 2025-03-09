@@ -38,7 +38,7 @@ app.get('/calendar.html', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 
-mongoose.connect(mongoUri)
+//mongoose.connect(mongoUri)
 
 // Fetch all user profiles
 app.get('/api/users', async (req, res) => {
