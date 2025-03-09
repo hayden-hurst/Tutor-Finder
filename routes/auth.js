@@ -6,19 +6,21 @@ const router = express.Router();
 // Signup
 router.post('/signup', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, firstName, lastName } = req.body;
+
+        console.log("Request Body:", req.body)
 
         // Check if user already exists
         if (await User.findOne({ email })) {
             return res.status(400).json({ error: 'User already exists' });
         }
 
-        const user = new User({ email, password });  // Password will be hashed in the model
+        const user = new User({ email, password, firstName, lastName });  // Password will be hashed in the model
         await user.save();
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: 'Server error', details: error.message });
     }
 });
 
