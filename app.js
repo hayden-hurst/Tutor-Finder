@@ -4,6 +4,7 @@ const session = require('express-session');
 const authRoutes = require('./routes/auth');
 const MongoStore = require('connect-mongo');
 const path = require('path');
+const User = require('./models/users')
 
 //test
 //const User = require('./models/users');
@@ -38,6 +39,22 @@ app.get('/calendar.html', (req, res) => {
 app.use('/api/auth', authRoutes);
 
 mongoose.connect(mongoUri)
+
+// Fetch all user profiles
+app.get('/api/users', async (req, res) => {
+    try {
+        // Fetch all users from the database, excluding passwords
+        const users = await User.find().select('firstName lastName email'); // Only select the fields we need
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ error: 'Error retrieving users', message: err.message });
+    }
+});
+
+
+
+
+mongoose.connect(url)
 .then(() => {
     app.listen(port, host, () => {
         console.log('Server is running on port', port);
