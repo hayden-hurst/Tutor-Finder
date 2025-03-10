@@ -5,6 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova software development project</title>
     <link rel="stylesheet" href="./styles/default.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+
+            form.addEventListener("submit", function (event) {
+                let isValid = true;
+
+                // Clear all previous error messages
+                document.querySelectorAll(".error-message").forEach(span => {
+                    span.textContent = ""; // Clear the message
+                    span.style.display = "none"; // Hide the error box by default
+                });
+
+                // Function to show error messages
+                function showError(inputId, message) {
+                    const inputField = document.getElementById(inputId);
+                    const errorSpan = inputField.nextElementSibling;
+
+                    if (errorSpan) {
+                        errorSpan.textContent = message;
+                        errorSpan.style.display = message ? "block" : "none"; // Show or hide based on message presence
+                    }
+                    isValid = false;
+                }
+
+                // Validate first name
+                const firstName = document.getElementById("firstName").value.trim();
+                if (firstName === "") {
+                    showError("firstName", "First name is required.");
+                }
+
+                // Validate last name
+                const lastName = document.getElementById("lastName").value.trim();
+                if (lastName === "") {
+                    showError("lastName", "Last name is required.");
+                }
+
+                // Validate email format
+                const email = document.getElementById("email").value.trim();
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailPattern.test(email)) {
+                    showError("email", "Enter a valid email address.");
+                }
+
+                // Validate year selection
+                const year = document.getElementById("year").value;
+                if (year === "") {
+                    showError("year", "Please select your academic year.");
+                }
+
+                // Validate major
+                const major = document.getElementById("major").value.trim();
+                if (major === "") {
+                    showError("major", "Major is required.");
+                }
+
+                // Validate password strength
+                const password = document.getElementById("password").value;
+                if (password.length < 6) {
+                    showError("password", "Password must be at least 6 characters long.");
+                }
+
+                // Prevent form submission if validation fails
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 </head>
 <body>    
     <header>
@@ -22,29 +91,49 @@
     <main>
         <div class="signup">
             <h2>Create profile</h2>
-            <p>or<a href="login.html"> Sign In</p></a>
-            <form action="/api/auth/signup" method="POST">
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" placeholder="Norm" required>
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Niner" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="norm@charlotte.edu" required>
-                <label for="year">Year:</label>
-                <select name="year" id="year">
-                    <option value="freshman">Freshman</option>
-                    <option value="sophomore">Sophomore</option>
-                    <option value="junior">Junior</option>
-                    <option value="senior">Senior</option>
-                    <option value="Grad">Graduate Student</option>
-                </select>
-                <label for="major">Major:</label>
-                <input type="text" id="major" name="major" placeholder="Computer Science" required>
-                <label for="bio">Bio (optional)</label>
-                <textarea name="bio" id="bio" cols="30" rows="10"></textarea>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="password123" required>
-                <input type="checkbox" name="remember" value="Remember me">Remember me
+            <p>or <a href="login.html">Sign In</a></p>
+            <form action="/api/auth/signup" method="POST" novalidate>
+                <div>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Norm">
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Niner">
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="norm@charlotte.edu">
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="year">Year:</label>
+                    <select name="year" id="year">
+                        <option value="" selected disabled>Select Year</option>
+                        <option value="freshman">Freshman</option>
+                        <option value="sophomore">Sophomore</option>
+                        <option value="junior">Junior</option>
+                        <option value="senior">Senior</option>
+                        <option value="Grad">Graduate Student</option>
+                    </select>
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="major">Major:</label>
+                    <input type="text" id="major" name="major" placeholder="Computer Science">
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="bio">Bio (optional)</label>
+                    <textarea name="bio" id="bio" cols="30" rows="10"></textarea>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="password123">
+                    <span class="error-message"></span>
+                </div>
                 <br>
                 <input type="submit" value="Create" class="button">
             </form>

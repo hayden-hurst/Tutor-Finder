@@ -219,3 +219,16 @@ a {
         padding-top: 100px; /* Increased padding to push content */
     }
 }
+
+.error-message {
+    display: none; /* Hide error boxes by default */
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    color: red;
+    background-color: #ffffff;
+    border: 1px solid red;
+    border-radius: 5px;
+    font-size: 0.9em;
+    max-width: 300px;
+}
