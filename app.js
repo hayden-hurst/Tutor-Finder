@@ -54,7 +54,7 @@ app.get('/api/users', async (req, res) => {
 
 
 
-mongoose.connect(url)
+mongoose.connect(mongoUri)
 .then(() => {
     app.listen(port, host, () => {
         console.log('Server is running on port', port);
