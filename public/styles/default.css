@@ -163,7 +163,7 @@ select {
     height: 40px; /* Ensures uniform height */
 }
 
-#year {
+#year, #major {
     width: 100%;
     padding: 10px;
     display: block;

@@ -56,7 +56,7 @@
                 }
 
                 // Validate major
-                const major = document.getElementById("major").value.trim();
+                const major = document.getElementById("major").value;
                 if (major === "") {
                     showError("major", "Major is required.");
                 }
@@ -122,12 +122,85 @@
                 </div>
                 <div>
                     <label for="major">Major:</label>
-                    <input type="text" id="major" name="major" placeholder="Computer Science">
+                    <select name="major" id="major">
+                        <option value="" selected disabled>Select Major</option>
+                        <option value="Accounting">Accounting</option>
+                        <option value="Africana Studies">Africana Studies</option>
+                        <option value="Anthropology">Anthropology</option>
+                        <option value="Architecture">Architecture</option>
+                        <option value="Art">Art</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Business Administration">Business Administration</option>
+                        <option value="Business Analytics">Business Analytics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Child and Family Development">Child and Family Development</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                        <option value="Communication Studies">Communication Studies</option>
+                        <option value="Computer Engineering">Computer Engineering</option>
+                        <option value="Construction Management">Construction Management</option>
+                        <option value="Criminal Justice">Criminal Justice</option>
+                        <option value="Dance">Dance</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Earth and Environmental Sciences">Earth and Environmental Sciences</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                        <option value="Electromechanical Engineering Technology">Electromechanical Engineering Technology</option>
+                        <option value="Elementary Education">Elementary Education</option>
+                        <option value="English">English</option>
+                        <option value="Environmental Engineering,">Environmental Engineering,</option>
+                        <option value="Environmental Studies">Environmental Studies</option>
+                        <option value="Exercise Science">Exercise Science</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Fire and Safety Engineering Technology">Fire and Safety Engineering Technology</option>
+                        <option value="French">French</option>
+                        <option value="Geography">Geography</option>
+                        <option value="Geology">Geology</option>
+                        <option value="German">German</option>
+                        <option value="Global Studies">Global Studies</option>
+                        <option value="Graphic Design">Graphic Design</option>
+                        <option value="Health Systems Management">Health Systems Management</option>
+                        <option value="History">History</option>
+                        <option value="Interdisciplinary Studies">Interdisciplinary Studies</option>
+                        <option value="International Business">International Business</option>
+                        <option value="Japanese Studies">Japanese Studies</option>
+                        <option value="Latin American Studies">Latin American Studies</option>
+                        <option value="Management">Management</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Mechanical Engineering Technology">Mechanical Engineering Technology</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Meteorology">Meteorology</option>
+                        <option value="Middle Grades Education">Middle Grades Education</option>
+                        <option value="Music">Music</option>
+                        <option value="Nursing">Nursing</option>
+                        <option value="Operations and Supply Chain Management">Operations and Supply Chain Management</option>
+                        <option value="Philosophy">Philosophy</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Political Science">Political Science</option>
+                        <option value="Professional Studies">Professional Studies</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="Public Health">Public Health</option>
+                        <option value="Religious Studies">Religious Studies</option>
+                        <option value="Respiratory Therapy">Respiratory Therapy</option>
+                        <option value="Social Work">Social Work</option>
+                        <option value="Sociology">Sociology</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="Special Education">Special Education</option>
+                        <option value="Systems Engineering">Systems Engineering</option>
+                        <option value="Theatre">Theatre</option>
+                        <option value="Writing">Writing</option>
+                    </select>
                     <span class="error-message"></span>
                 </div>
                 <div>
                     <label for="bio">Bio (optional)</label>
                     <textarea name="bio" id="bio" cols="30" rows="10"></textarea>
+                </div>
+                <div>
+                    <label for="role">Role:</label>
+                    <input type="checkbox" name="tutor" value="tutor"> Tutor
+                    <br>
+                    <input type="checkbox" name="tutee" value="tutee"> Tutee
                 </div>
                 <div>
                     <label for="password">Password:</label>
