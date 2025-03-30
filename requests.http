@@ -7,8 +7,20 @@ POST http://localhost:3000/api/auth/signup
 Content-Type: application/json
 
 {
-    "firstName": "norm2",
-    "lastName": "example2",
-    "email": "normexample2@charlotte.edu",
-    "password": "password123"
+    "firstName": "Evan",
+    "lastName": "Wurster",
+    "email": "ewurste1@charlotte.edu",
+    "password": "password123",
+    "major": "Computer Science"
+}
+
+
+### Login
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "ewurste1@charlotte.edu",
+    "password": "password123",
+    "rememberMe": "false"
 }

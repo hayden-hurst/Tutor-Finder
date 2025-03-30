@@ -38,7 +38,6 @@ app.get('/calendar.html', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 
-//mongoose.connect(mongoUri)
 
 // Fetch all user profiles
 app.get('/api/users', async (req, res) => {
@@ -56,6 +55,7 @@ app.get('/api/users', async (req, res) => {
 
 mongoose.connect(mongoUri)
 .then(() => {
+    console.log("Connected to MongoDB connection URI: ", mongoose.connection.host);
     app.listen(port, host, () => {
         console.log('Server is running on port', port);
     });

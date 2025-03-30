@@ -26,17 +26,45 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     try {
         const { email, password, rememberMe } = req.body;
+        console.log("attempting to find user with email: ", email)
         const user = await User.findOne({ email });
+        console.log("Found user in DB")
 
-        if (!user || !(await user.comparePassword(password))) {  // Use the comparePassword method from the model
-            return res.status(401).json({ error: 'Invalid credentials' });
+        if (user){
+            console.log("user found")
+        } else {
+            console.log("user not found")
+            return res.status(401).json({error: 'User not found'})
+        }
+        //Debugging
+        console.log("User found: ", user, password)
+        const isMatch = await user.comparePassword(password);
+        
+        if (isMatch) {
+            console.log("passwords match")
+        }else {
+            console.log('invalid password')
+            return res.status(401).json({error: 'Invalid password'})
         }
 
+        //if (!user || !(await user.comparePassword(password))) {  // Use the comparePassword method from the model
+        //    return res.status(401).json({ error: 'Invalid credentials' });
+        //}
+
+
+        console.log("before session.userId");
         // Store user info in session
         req.session.userId = user._id;
+        console.log("after session.userId");
+        console.log("before session.cookie.maxAge");
         req.session.cookie.maxAge = rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000;
-
-        res.json({ message: 'Login successful' });
+        console.log("after session.cookie.maxAge");
+        try{
+            console.log("attempting to send successful response")
+            return res.json({ message: 'Login successful' });
+        } catch (error) {
+            console.log("couldnt return successful response")
+        }
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }

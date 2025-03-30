@@ -9,7 +9,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector("form");
 
-            form.addEventListener("submit", function (event) {
+            form.addEventListener("submit", async function (event) {
                 let isValid = true;
 
                 // Clear previous error messages
@@ -49,6 +49,46 @@
                 if (!isValid) {
                     event.preventDefault();
                 }
+
+                const rememberMe = document.getElementById("rememberMe").checked;
+
+                try{
+                    console.log("line before fetch, ", "fetching with email: ", email, ", password: ", password, " and rememberMe: ", rememberMe) //for debugging
+                    //Send login info to auth.js
+                    try{
+                        const response = await fetch("/api/auth/login", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email, password, rememberMe})
+                    });
+                    } catch (error){
+                        console.error("Fetch error: ", error)
+                    }
+                    
+                    console.log("line after fetch"); //for debugging
+                    try{console.log("Response exists: ", response)} catch(error){console.log("Response doesnt exist")}
+                    try{console.log("Response status:", response.status);} catch (error) {console.log("Response status error")}
+                    
+                    //Response from auth
+                    const data = await response.json();
+                    //Logs to debug
+                   
+                    console.log("Response data:", data);
+
+                    console.log("response.status: ", response.status)
+                    if (response.ok) {
+                        window.location.href = "index.html";
+                    } else {
+                        alert(data.error || "Login failed");
+                    }
+
+                } catch (error) {
+                    console.error("Login ereror:", error);
+                    alert("An error occurred. Please try again")
+                }
+
             });
         });
     </script>
@@ -84,7 +124,7 @@
                 </div>
                 
                 <div>
-                    <input type="checkbox" name="remember" value="Remember me"> Remember me
+                    <input type="checkbox" name="remember" id="rememberMe" value="Remember me"> Remember me
                 </div>
                 
                 <br>
