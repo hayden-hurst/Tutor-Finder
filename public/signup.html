@@ -72,6 +72,20 @@
                     event.preventDefault();
                 }
             });
+
+            // Function to load image preview
+            function loadImage() {
+                const image = document.getElementById("image").files[0];
+                if (image) {
+                    const imageUrl = URL.createObjectURL(image);
+                    document.getElementById("load-image").innerHTML = `<img src="${imageUrl}" alt="Preview">`;
+                } else {
+                    alert("Please select an image to load.");
+                }
+            }
+
+            // Set up image load button click handler
+            document.getElementById("load-image-btn").addEventListener("click", loadImage);
         });
     </script>
 </head>
@@ -107,6 +121,12 @@
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" placeholder="norm@charlotte.edu">
                     <span class="error-message"></span>
+                </div>
+                <div>
+                    <label>Image:</label>
+                    <input type="file" id="image">
+                    <button type="button" id="load-image-btn">CLICK HERE TO LOAD</button>
+                    <div id="load-image"></div>
                 </div>
                 <div>
                     <label for="year">Year:</label>
