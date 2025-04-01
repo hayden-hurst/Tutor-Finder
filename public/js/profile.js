@@ -1,16 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
-
-    const params = new URLSearchParams(window.location.search);
-    const userId = params.get('userId');
-
-    // Determine the correct endpoint
-    const endpoint = userId ? `/api/users/${userId}` : `/api/auth/profile`; // TESTING
-
-
     try {
-        const response = await fetch(endpoint, {
-            credentials: 'include'
-        });
+        const response = await fetch('/api/auth/profile');
         if (!response.ok) throw new Error('Failed to fetch profile data');
 
         const user = await response.json();

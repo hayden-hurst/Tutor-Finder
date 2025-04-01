@@ -20,12 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
             tutorDiv.classList.add('tutor');
             tutorDiv.innerHTML = `
                 <div class="tutor-info">
-                    <a href="profile.html?userId=${user._id}">
-                        ${user.firstName} ${user.lastName}
-                    </a>
-                <span>${user.email}</span>
-            </div>
-        `;
+                    <span>${user.firstName} ${user.lastName}</span>
+                    <span>${user.email}</span>
+                </div>
+            `;
             userList.appendChild(tutorDiv);
         });
     }

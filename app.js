@@ -1,18 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const MongoStore = require('connect-mongo');
 const session = require('express-session');
+const authRoutes = require('./routes/auth');
+const MongoStore = require('connect-mongo');
 const path = require('path');
+const User = require('./models/users')
 
-const app = express();
+//test
+//const User = require('./models/users');
 
 let port = 3000;
 let host = 'localhost';
 let url = 'mongodb://localhost:27017/TutorApp'
+//app.set('view engine')
 const mongoUri = 'mongodb+srv://admin1:admin1@cluster0.htsmz.mongodb.net/TutorApp?retryWrites=true&w=majority&appName=Cluster0'
 
-<<<<<<< Updated upstream
-=======
 // Middleware
 const app = express();
 app.use(express.json());
@@ -53,7 +55,6 @@ app.get('/calendar.html', isAuthenticated, (req, res) => {
 app.use('/api/auth/profile', isAuthenticated);
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', authRoutes);
 
 
 //mongoose.connect(mongoUri)
@@ -72,7 +73,6 @@ app.get('/api/users', async (req, res) => {
 
 
 
->>>>>>> Stashed changes
 mongoose.connect(mongoUri)
 .then(() => {
     app.listen(port, host, () => {
@@ -80,41 +80,3 @@ mongoose.connect(mongoUri)
     });
 })
 .catch (err => console.log(err.message));
-
-// Sessions
-app.use(
-    session({
-        secret: "ihqfbJAFFIU91ASFH",
-        resave: false,
-        saveUninitialized: false,
-        store: new MongoStore({mongoUrl: mongoUri}),
-        cookie: {maxAge: 60*60*1000}
-    })
-);
-
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({extended: true}));
-
-
-// NOT USING EJS FIND SOMETHING TO RENDER STATIC HTML PAGES
-app.get('/', (req, res) => {
-    res.render('index');
-})
-
-// Error Handlers
-
-app.use((req, res, next) => {
-    let err = new Error('The server cannot locate ' + req.url);
-    err.status = 404;
-    next(err);
-});
-
-app.use((err, req, res, next) => {
-    console.log(err.stack);
-    if(!err.status) {
-        err.status = 500;
-        err.message = ("Internal Server Error");
-    }
-    res.status(err.status);
-    res.render('error', {error: err});
-});
