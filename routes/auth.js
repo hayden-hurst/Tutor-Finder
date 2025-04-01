@@ -49,6 +49,7 @@ router.post('/logout', (req, res) => {
             console.error('Logout error:', err);  // Log error for debugging
             return res.status(500).json({ error: 'Logout failed' });
         }
+        res.clearCookie('connect.sid'); // Clear the session cookie
         res.json({ message: 'Logged out successfully' });
     });
 });
@@ -61,27 +62,9 @@ const authMiddleware = (req, res, next) => {
     next();
 };
 
-// this is a temporary (testing purposes)
-router.get('/profile', async (req, res) => {
-    // fake user data
-    const fakeUser = {
-        firstName: 'Hayden',
-        lastName: 'Hurst',
-        email: 'hhurst3@example.com',
-        year: 'Senior',
-        major: 'Computer science',
-        bio: 'I am a student at UNCC',
-    };
-
-    // Simulate the response as if it was fetched from the database
-    res.json(fakeUser);
-});
-
-// Protected Profile Route
-/*
 router.get('/profile', authMiddleware, async (req, res) => {
     const user = await User.findById(req.session.userId).select('-password');
     res.json(user);
 });
-*/
+
 module.exports = router;
