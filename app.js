@@ -55,6 +55,7 @@ app.get('/calendar.html', isAuthenticated, (req, res) => {
 app.use('/api/auth/profile', isAuthenticated);
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
 
 
 //mongoose.connect(mongoUri)
