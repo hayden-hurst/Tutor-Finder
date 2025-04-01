@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova software development project</title>
-    <link rel="stylesheet" href="/styles/default.css">
+    <link rel="stylesheet" href="./styles/default.css">
 </head>
-
+<!--comment-->
 <body>
     <header>
         <h1>Tutor Finder</h1>
@@ -15,11 +15,21 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="./calendar.html">Calendar</a></li>
                 <li><a href="./profile.html">Profile</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+                <li><a href="login.html">Log In</a></li>
             </ul>
         </nav>
     </header>
     
-    <div class="tutor-list-container">
+    <!--Search bar-->
+    <div class="search-bar-container">
+        <input type="text" id="search-bar" placeholder="Search tutors..." class="search-bar">
+
+    </div>
+
+
+    <!--User List-->
+    <div class="user-list" id="user-list">
 
         <div class="tutor">
             <img >
@@ -31,5 +41,7 @@
         </div>
     </div>
 
+    <script src="js/userList.js"></script>
+    <script src="/js/navbar.js"></script> <!-- Dynamic navbar script -->
 </body>
 </html>

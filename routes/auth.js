@@ -4,23 +4,23 @@ const User = require('../models/users.js');
 const router = express.Router();
 
 // Signup
-router.post('/signup', async (req, res) => {
+ router.post('/signup', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { firstName, lastName, email, password, major } = req.body;
 
         // Check if user already exists
         if (await User.findOne({ email })) {
             return res.status(400).json({ error: 'User already exists' });
         }
 
-        const user = new User({ email, password });  // Password will be hashed in the model
+        const user = new User({ firstName, lastName, email, password , major});  // Password will be hashed in the model
         await user.save();
 
         res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: 'Server error', details: error.message }); // details is for debugging purposes
     }
-});
+}); 
 
 // Login
 router.post('/login', async (req, res) => {
@@ -49,6 +49,7 @@ router.post('/logout', (req, res) => {
             console.error('Logout error:', err);  // Log error for debugging
             return res.status(500).json({ error: 'Logout failed' });
         }
+        res.clearCookie('connect.sid'); // Clear the session cookie
         res.json({ message: 'Logged out successfully' });
     });
 });
@@ -61,27 +62,9 @@ const authMiddleware = (req, res, next) => {
     next();
 };
 
-// this is a temporary (testing purposes)
-router.get('/profile', async (req, res) => {
-    // fake user data
-    const fakeUser = {
-        firstName: 'Hayden',
-        lastName: 'Hurst',
-        email: 'hhurst3@example.com',
-        year: 'Senior',
-        major: 'Computer science',
-        bio: 'I am a student at UNCC',
-    };
-
-    // Simulate the response as if it was fetched from the database
-    res.json(fakeUser);
-});
-
-// Protected Profile Route
-/*
 router.get('/profile', authMiddleware, async (req, res) => {
     const user = await User.findById(req.session.userId).select('-password');
     res.json(user);
 });
-*/
+
 module.exports = router;
