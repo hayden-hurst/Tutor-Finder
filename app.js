@@ -75,7 +75,7 @@ app.get('/api/users', async (req, res) => {
 
 mongoose.connect(mongoUri)
 .then(() => {
-    console.log("Connected to MongoDB connection URI: ", mongoose.connection.host);
+    console.log("Connected to MongoDB");
     app.listen(port, host, () => {
         console.log('Server is running on port', port);
     });
