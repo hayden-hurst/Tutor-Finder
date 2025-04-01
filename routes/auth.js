@@ -77,6 +77,7 @@ router.post('/logout', (req, res) => {
             console.error('Logout error:', err);  // Log error for debugging
             return res.status(500).json({ error: 'Logout failed' });
         }
+        res.clearCookie('connect.sid'); // Clear the session cookie
         res.json({ message: 'Logged out successfully' });
     });
 });
@@ -89,27 +90,24 @@ const authMiddleware = (req, res, next) => {
     next();
 };
 
-// this is a temporary (testing purposes)
-router.get('/profile', async (req, res) => {
-    // fake user data
-    const fakeUser = {
-        firstName: 'Hayden',
-        lastName: 'Hurst',
-        email: 'hhurst3@example.com',
-        year: 'Senior',
-        major: 'Computer science',
-        bio: 'I am a student at UNCC',
-    };
-
-    // Simulate the response as if it was fetched from the database
-    res.json(fakeUser);
-});
-
-// Protected Profile Route
-/*
 router.get('/profile', authMiddleware, async (req, res) => {
     const user = await User.findById(req.session.userId).select('-password');
     res.json(user);
 });
-*/
+
+router.get('/users/:id', async (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router;

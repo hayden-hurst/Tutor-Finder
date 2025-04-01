@@ -5,133 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova software development project</title>
     <link rel="stylesheet" href="./styles/default.css">
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-
-            form.addEventListener("submit", async function (event) {
-                let isValid = true;
-
-                // Clear previous error messages
-                document.querySelectorAll(".error-message").forEach(span => {
-                    span.textContent = "";
-                    span.style.color = "red";
-                    span.style.display = "none";  // Hide empty error boxes
-                });
-
-                // Get input elements and their corresponding error message spans
-                function showError(inputId, message) {
-                    const inputField = document.getElementById(inputId);
-                    const errorSpan = inputField.nextElementSibling;
-                    errorSpan.textContent = message;
-                    errorSpan.style.display = "block";  // Show the error box
-                    isValid = false;
-                }
-
-                // Validate email
-                const email = document.getElementById("email").value.trim();
-                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                if (email === "") {
-                    showError("email", "Email is required.");
-                } else if (!emailPattern.test(email)) {
-                    showError("email", "Please enter a valid email address.");
-                }
-
-                // Validate password
-                const password = document.getElementById("password").value;
-                if (password === "") {
-                    showError("password", "Password is required.");
-                } else if (password.length < 6) {
-                    showError("password", "Password must be at least 6 characters.");
-                }
-
-                // Prevent form submission if validation fails
-                if (!isValid) {
-                    event.preventDefault();
-                }
-
-                const rememberMe = document.getElementById("rememberMe").checked;
-
-                try{
-                    console.log("line before fetch, ", "fetching with email: ", email, ", password: ", password, " and rememberMe: ", rememberMe) //for debugging
-                    //Send login info to auth.js
-                    try{
-                        const response = await fetch("/api/auth/login", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({ email, password, rememberMe})
-                    });
-                    } catch (error){
-                        console.error("Fetch error: ", error)
-                    }
-                    
-                    console.log("line after fetch"); //for debugging
-                    try{console.log("Response exists: ", response)} catch(error){console.log("Response doesnt exist")}
-                    try{console.log("Response status:", response.status);} catch (error) {console.log("Response status error")}
-                    
-                    //Response from auth
-                    const data = await response.json();
-                    //Logs to debug
-                   
-                    console.log("Response data:", data);
-
-                    console.log("response.status: ", response.status)
-                    if (response.ok) {
-                        window.location.href = "index.html";
-                    } else {
-                        alert(data.error || "Login failed");
-                    }
-
-                } catch (error) {
-                    console.error("Login ereror:", error);
-                    alert("An error occurred. Please try again")
-                }
-
-            });
-        });
-    </script>
+    <script src="js/auth-client.js"></script>
 </head>
-<body>    
-    <header>
-        <h1>Tutor Finder</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="./calendar.html">Calendar</a></li>
-                <li><a href="./profile.html">Profile</a></li>
-                <li><a href="signup.html">Sign Up</a></li>
-                <li><a href="login.html">Log In</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main> 
-        <div class="signup">
-            <h2>Log In</h2>
-            <p>or <a href="signup.html">Create Profile</a></p>
-            <form action="" novalidate>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" placeholder="norm@charlotte.edu" required>
-                    <span class="error-message"></span>  <!-- Error message span -->
-                </div>
-            
-                <div>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" placeholder="password123" required>
-                    <span class="error-message"></span>  <!-- Error message span -->
-                </div>
-                
-                <div>
-                    <input type="checkbox" name="remember" id="rememberMe" value="Remember me"> Remember me
-                </div>
-                
-                <br>
-                <input type="submit" value="Login" class="button">
-            </form>
-        </div>
-    </main>
-    <footer></footer>
+<body>
+<header>
+    <h1>Tutor Finder</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="./calendar.html">Calendar</a></li>
+            <li><a href="./profile.html">Profile</a></li>
+            <li><a href="signup.html">Sign Up</a></li>
+            <li><a href="login.html">Log In</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div class="signup">
+        <h2>Log In</h2>
+        <p>or <a href="signup.html">Create Profile</a></p>
+        <form id="login-form" onsubmit="event.preventDefault(); login();" novalidate>
+            <div>
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" placeholder="norm@charlotte.edu" required>
+                <span class="error-message"></span>
+            </div>
+
+            <div>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" placeholder="password123" required>
+                <span class="error-message"></span>
+            </div>
+
+            <div>
+                <input type="checkbox" id="remember-me" name="remember" value="Remember me">
+                <label for="remember-me">Remember me</label>
+            </div>
+
+            <br>
+            <button type="submit" class="button">Login</button>
+        </form>
+    </div>
+</main>
+<footer></footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("login-form");
+        const emailInput = document.getElementById("login-email");
+        const passwordInput = document.getElementById("login-password");
+
+        // Client-side validation
+        form.addEventListener("submit", function (event) {
+            let isValid = true;
+
+            // Clear previous error messages
+            document.querySelectorAll(".error-message").forEach(span => {
+                span.textContent = "";
+                span.style.display = "none";
+            });
+
+            function showError(input, message) {
+                const errorSpan = input.nextElementSibling;
+                errorSpan.textContent = message;
+                errorSpan.style.display = "block";
+                errorSpan.style.color = "red";
+                isValid = false;
+            }
+
+            // Validate email
+            const email = emailInput.value.trim();
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (email === "") {
+                showError(emailInput, "Email is required.");
+            } else if (!emailPattern.test(email)) {
+                showError(emailInput, "Please enter a valid email address.");
+            }
+
+            // Validate password
+            const password = passwordInput.value;
+            if (password === "") {
+                showError(passwordInput, "Password is required.");
+            } else if (password.length < 6) {
+                showError(passwordInput, "Password must be at least 6 characters.");
+            }
+
+            // Only proceed with authentication if client-side validation passes
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 </body>
 </html>

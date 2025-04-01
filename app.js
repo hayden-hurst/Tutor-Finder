@@ -28,15 +28,35 @@ app.use(session({
     cookie: { secure: false } // not secured for local development
 }));
 
-app.get('/profile.html', (req, res) => {
+const isAuthenticated = (req, res, next) => {
+    // Check for authentication
+    if (req.session && req.session.userId) {
+        return next();
+    }
+
+    // For API requests, return a 401 status instead of redirecting
+    if (req.path.startsWith('/api/')) {
+        return res.status(401).json({ error: 'Unauthorized: Please log in' });
+    }
+
+    // For HTML page requests, redirect to login
+    res.redirect('/login.html');
+};
+
+// Apply the middleware to your protected routes
+app.get('/profile.html', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'profile.html'));
 });
-app.get('/calendar.html', (req, res) => {
+
+app.get('/calendar.html', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'calendar.html'));
 });
 
+app.use('/api/auth/profile', isAuthenticated);
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes);
+
 
 
 // Fetch all user profiles
