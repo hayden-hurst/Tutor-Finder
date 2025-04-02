@@ -28,7 +28,7 @@ userSchema.pre('save', function(next){
 });
 
 // Compares input password in app to the password stored in the database
- userSchema.methods.comparePassword = function(inputPassword) {
+ userSchema.methods.comparePassword = async function(inputPassword) {
     let user = this;
     return bcrypt.compare(inputPassword, user.password); 
 } 

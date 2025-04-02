@@ -193,6 +193,20 @@
                 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 if (!emailPattern.test(email)) {
                     showError("email", "Enter a valid email address.");
+                } 
+                const validateEmail = (email) => {
+                    if (!email.includes('@')){
+                        return false;
+                    }
+                    const emailParts = email.split('@');
+                    if (emailParts[1] === 'uncc.edu' || emailParts[1] === 'charlotte.edu'){
+                        return true;
+                    } else{
+                        return false;
+                    }
+                }
+                if (!validateEmail(email)) {
+                    showError("email", "Enter a uncc/charlotte.edu email address");
                 }
 
                 // Validate year selection

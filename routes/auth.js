@@ -26,17 +26,32 @@ const router = express.Router();
 router.post('/login', async (req, res) => {
     try {
         const { email, password, rememberMe } = req.body;
+        console.log("attempting to find user with email: ", email)
         const user = await User.findOne({ email });
 
-        if (!user || !(await user.comparePassword(password))) {  // Use the comparePassword method from the model
-            return res.status(401).json({ error: 'Invalid credentials' });
+        if (user){
+            console.log("user found")
+        } else {
+            return res.status(401).json({error: 'User not found'})
+        }
+
+        //Check Password
+        const isMatch = await user.comparePassword(password);
+        
+        if (!isMatch) {
+            return res.status(401).json({error: 'Invalid password'});
         }
 
         // Store user info in session
         req.session.userId = user._id;
         req.session.cookie.maxAge = rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000;
 
-        res.json({ message: 'Login successful' });
+        //Send response
+        try{
+            return res.json({ message: 'Login successful' });
+        } catch (error) {
+            console.log("couldnt return successful response")
+        }
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
@@ -65,6 +80,21 @@ const authMiddleware = (req, res, next) => {
 router.get('/profile', authMiddleware, async (req, res) => {
     const user = await User.findById(req.session.userId).select('-password');
     res.json(user);
+});
+
+router.get('/users/:id', async (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        const user = await User.findById(req.params.id).select('-password');
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({ error: 'Server error' });
+    }
 });
 
 module.exports = router;
