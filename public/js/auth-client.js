@@ -9,7 +9,6 @@ async function signup() {
 
     // Form validation
     if (!firstName || !lastName || !email || !password || !major) {
-        alert('All fields are required');
         return;
     }
 
@@ -23,7 +22,7 @@ async function signup() {
         const data = await res.json();
 
         if (res.ok) {
-            alert('Signup successful! Please log in.');
+            console.log('Signup successful.');
 
             // Prevent multiple redirects
             if (!isRedirecting) {
@@ -31,7 +30,7 @@ async function signup() {
                 window.location.href = '/login.html';
             }
         } else {
-            alert(data.error || 'Signup failed');
+            console.log(data.error || 'Signup failed');
         }
     } catch (error) {
         console.error('Signup error:', error);
@@ -46,7 +45,6 @@ async function login() {
 
     // Basic validation
     if (!email || !password) {
-        alert('Email and password are required');
         return;
     }
 
@@ -68,11 +66,11 @@ async function login() {
                 }, 100);
             }
         } else {
-            alert(data.error || 'Login failed');
+            console.log(data.error || 'Login failed');
         }
     } catch (error) {
         console.error('Login error:', error);
-        alert('An error occurred during login');
+        console.log('An error occurred during login');
     }
 }
 
@@ -85,25 +83,21 @@ async function logout() {
             headers: { 'Content-Type': 'application/json' }
         });
 
-        console.log("Logout response:", res.status); // Debug log
+        if (res.ok) {
+            console.log("Logout successful, redirecting..."); // Debug log
 
-        // Even if the server response isn't ok, we'll still log the user out client-side
-        if (!isRedirecting) {
-            isRedirecting = true;
+            // Reload the page to reflect changes
+            window.location.reload();
 
-            // Small delay to allow logs to be seen in console
-            setTimeout(() => {
-                window.location.href = '/index.html';
-            }, 100);
+            // Alternatively, redirect to login page for protected pages
+            if (window.location.pathname.includes('calendar.html') || window.location.pathname.includes('profile.html')) {
+                window.location.href = '/login.html';
+            }
+        } else {
+            console.error("Logout failed with status:", res.status);
         }
     } catch (error) {
         console.error('Logout error:', error);
-
-        // Even if there's an error, we'll still redirect
-        if (!isRedirecting) {
-            isRedirecting = true;
-            window.location.href = '/index.html';
-        }
     }
 }
 

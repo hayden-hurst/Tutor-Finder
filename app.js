@@ -52,7 +52,10 @@ app.get('/calendar.html', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'calendar.html'));
 });
 
-app.use('/api/auth/profile', isAuthenticated);
+app.get('/index.html', isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 
