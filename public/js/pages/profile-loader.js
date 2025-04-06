@@ -24,8 +24,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('user-major').textContent = user.major;
         document.getElementById('user-bio').textContent = user.bio;
 
-        // Shows edit profile button if endpoint is the current session
-        if (endpoint === "/api/users/me"){
+        // Now determine if this is the current user's profile
+        let isCurrentUser = (endpoint === "/api/users/me");
+
+        // If we're viewing another user's profile by ID, check if it's actually our profile
+        if (!isCurrentUser && userId) {
+            // Fetch current user data to compare IDs
+            const meResponse = await fetch('/api/users/me', {
+                credentials: 'include'
+            });
+
+            if (meResponse.ok) {
+                const currentUser = await meResponse.json();
+                isCurrentUser = (currentUser.id === user.id);
+            }
+        }
+
+        // Show edit button if this is the current user's profile
+        if (isCurrentUser) {
             const editBtn = document.getElementById('edit-profile');
             if (editBtn) editBtn.style.display = 'inline-block';
         }
