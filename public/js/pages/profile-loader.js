@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userId = params.get('userId');
 
     // Determine the correct endpoint
-    const endpoint = userId ? `/api/users/${userId}` : `/api/auth/profile`;
+    const endpoint = userId ? `/api/users/${userId}` : `/api/users/me`;
 
 
     try {
@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('user-year').textContent = user.year;
         document.getElementById('user-major').textContent = user.major;
         document.getElementById('user-bio').textContent = user.bio;
+
+        // Shows edit profile button if endpoint is the current session
+        if (endpoint === "/api/users/me"){
+            const editBtn = document.getElementById('edit-profile');
+            if (editBtn) editBtn.style.display = 'inline-block';
+        }
     } catch (error) {
         // Optionally log error or update an existing element
         console.error(error);

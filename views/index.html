@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova software development project</title>
-    <link rel="stylesheet" href="./styles/default.css">
-    <script src="/js/auth-client.js"></script>
+    <link rel="stylesheet" href="/styles/default.css">
+    <script src="/js/services/auth-service.js"></script>
 </head>
-<!--comment-->
 <body>
     <header>
         <h1>Tutor Finder</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="./calendar.html">Calendar</a></li>
-                <li><a href="./profile.html">Profile</a></li>
-                <!-- Login/Signup/Logout links will be dynamically updated -->
+                <!-- navbar links will be dynamically updated -->
             </ul>
         </nav>
     </header>
@@ -47,7 +43,7 @@
         <button id="next-button">Next</button>
     </div>
 
-    <script src="js/userList.js"></script>
-    <script src="/js/navbar.js"></script> <!-- Dynamic navbar script -->
+    <script src="/js/pages/user-list-loader.js"></script>
+    <script src="/js/ui/navbar-controller.js"></script> <!-- Dynamic navbar script -->
 </body>
 </html>

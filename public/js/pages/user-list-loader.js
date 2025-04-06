@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const usersPerPage = 10; //Load 10 users per 'page'
 
     // Fetch and store users
-    fetch('/api/users')
+    fetch('/api/users/list')
         .then(response => response.json())
         .then(users => {
             allUsers = users;
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tutorDiv.classList.add('tutor');
             tutorDiv.innerHTML = `
                 <div class="tutor-info">
-                <a href="profile.html?userId=${user._id}">
+                <a href="profile?userId=${user._id}">
                     ${user.firstName} ${user.lastName}
                 </a>
             <span>${user.email}</span>

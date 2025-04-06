@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/auth-api');
+const profileRoutes = require('./routes/user-api');
 const MongoStore = require('connect-mongo');
 const path = require('path');
 const User = require('./models/users')
@@ -40,41 +41,19 @@ const isAuthenticated = (req, res, next) => {
     }
 
     // For HTML page requests, redirect to login
-    res.redirect('/login.html');
+    res.redirect('/login');
 };
 
-// Apply the middleware to your protected routes
-app.get('/profile.html', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'profile.html'));
-});
+// page routes
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, './views/index.html')));
+app.get('/signup', (req, res) => res.sendFile(path.join(__dirname, './views/signup.html')));
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, './views/login.html')));
+app.get('/profile', isAuthenticated, (req, res) => res.sendFile(path.join(__dirname, './views/profile.html')));
+app.get('/calendar', isAuthenticated, (req, res) => res.sendFile(path.join(__dirname, './views/calendar.html')));
 
-app.get('/calendar.html', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'calendar.html'));
-});
-
-app.get('/index.html', isAuthenticated, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Routes
+// api routes
 app.use('/api/auth', authRoutes);
-app.use('/api', authRoutes);
-
-
-
-// Fetch all user profiles
-app.get('/api/users', async (req, res) => {
-    try {
-        // Fetch all users from the database, excluding passwords
-        const users = await User.find().select('firstName lastName email'); // Only select the fields we need
-        res.json(users);
-    } catch (err) {
-        res.status(500).json({ error: 'Error retrieving users', message: err.message });
-    }
-});
-
-
-
+app.use('/api/users', profileRoutes);
 
 mongoose.connect(mongoUri)
 .then(() => {

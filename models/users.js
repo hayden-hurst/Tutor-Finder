@@ -10,7 +10,16 @@ const userSchema = new Schema ({
     lastName: {type: String, required: [true, 'Last Name is required!']},
     email: {type: String, required: [true, 'Email is required!']},
     major: {type: String, required: [true, 'Major is required!']},
-    password: {type: String, required: [true, 'Password is required!']}
+    password: {type: String, required: [true, 'Password is required!']},
+    year: {type: String, required: [true, 'Year is required!']},
+    bio: {type: String, required: false, default: "This user hasn't written a bio yet.",
+        set: value => { //if bio is blank it will set to default bio
+            if (typeof value !== 'string' || value.trim() === '') {
+                return "This user hasn't written a bio yet.";
+            }
+            return value;
+        }
+    }
 });
 
 // Password Hashing
