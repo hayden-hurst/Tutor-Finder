@@ -30,11 +30,11 @@ router.get('/me', authMiddleware, async (req, res) => {
 // route used to edit the info of the user logged into the current session
 router.patch('/me', authMiddleware, async (req, res) => {
     try {
-        const { firstName, lastName, major, year, bio } = req.body;
+        const { firstName, lastName, major, year, bio, visibility } = req.body;
 
         const updatedUser = await User.findByIdAndUpdate(
             req.session.userId, // <--- use this directly
-            { firstName, lastName, major, year, bio },
+            { firstName, lastName, major, year, bio, visibility },
             { new: true, runValidators: true }
         );
 
@@ -54,7 +54,22 @@ router.get('/:id', authMiddleware, async (req, res) => {
         const user = await User.findById(req.params.id).select('-password');
         if (!user) return res.status(404).json({ error: 'User not found' });
 
-        res.json(user);
+        // check if the viewer of the profile is the logged in user
+        const isUser = user._id.toString() === req.session.userId;
+
+        // update the user's profile 
+        const updatedUser = {
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            year: user.year,
+            major: user.major,
+            bio: user.bio,
+            visibility: user.visibility || {},
+            email: isUser || user.visibility?.email !== false ? user.email : null
+        };
+
+        res.json(updatedUser);
     } catch (err) {
         res.status(500).json({ error: 'Server error' });
     }

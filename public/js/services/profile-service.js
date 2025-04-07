@@ -64,12 +64,20 @@ async function saveInfo(event){
     const major = document.getElementById('edit-major').value;
     const year = document.getElementById('edit-year').value;
     const bio = document.getElementById('edit-bio').value;
+    const emailVisible = document.getElementById('show-email')?.checked;
 
     try {
         const res = await fetch('/api/users/me', {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ firstName, lastName, major, year, bio })
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                major,
+                year,
+                bio,
+                visibility: { email: emailVisible }
+            })
         });
 
         const data = await res.json();
@@ -125,6 +133,8 @@ function openProfileEditor() {
     }
 
     document.getElementById('edit-bio').value = bio;
+    document.getElementById('show-email').checked = document.getElementById('user-email').textContent !== "[Hidden]";
+
 
     // Show the modal
     document.querySelector('.modal-backdrop').style.display = 'flex';

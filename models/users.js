@@ -19,6 +19,9 @@ const userSchema = new Schema ({
             }
             return value;
         }
+    },
+    visibility: { // visibility property will allow the selected fields to be hidden on the page
+        email: {type: Boolean, default: true}
     }
 });
 
@@ -36,7 +39,7 @@ userSchema.pre('save', function(next){
     .catch(err => next(err)); // create Error Handler
 });
 
-// Compares input password in app to the password stored in the database
+// compares input password in app to the password stored in the database
  userSchema.methods.comparePassword = async function(inputPassword) {
     let user = this;
     return bcrypt.compare(inputPassword, user.password); 
