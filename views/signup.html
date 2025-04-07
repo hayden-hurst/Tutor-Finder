@@ -4,145 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nova software development project</title>
-    <link rel="stylesheet" href="./styles/default.css">
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector("form");
-
-            form.addEventListener("submit", function (event) {
-                let isValid = true;
-
-                // Clear all previous error messages
-                document.querySelectorAll(".error-message").forEach(span => {
-                    span.textContent = ""; // Clear the message
-                    span.style.display = "none"; // Hide the error box by default
-                });
-
-                // Function to show error messages
-                function showError(inputId, message) {
-                    const inputField = document.getElementById(inputId);
-                    const errorSpan = inputField.nextElementSibling;
-
-                    if (errorSpan) {
-                        errorSpan.textContent = message;
-                        errorSpan.style.display = message ? "block" : "none"; // Show or hide based on message presence
-                    }
-                    isValid = false;
-                }
-
-                // Validate first name
-                const firstName = document.getElementById("firstName").value.trim();
-                if (firstName === "") {
-                    showError("firstName", "First name is required.");
-                }
-
-                // Validate last name
-                const lastName = document.getElementById("lastName").value.trim();
-                if (lastName === "") {
-                    showError("lastName", "Last name is required.");
-                }
-
-                // Validate email format
-                const email = document.getElementById("email").value.trim();
-                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                if (!emailPattern.test(email)) {
-                    showError("email", "Enter a valid email address.");
-                }
-
-                // Validate year selection
-                const year = document.getElementById("year").value;
-                if (year === "") {
-                    showError("year", "Please select your academic year.");
-                }
-
-                // Validate major
-                const major = document.getElementById("major").value;
-                if (major === "") {
-                    showError("major", "Major is required.");
-                }
-
-                // Validate password strength
-                const password = document.getElementById("password").value;
-                if (password.length < 6) {
-                    showError("password", "Password must be at least 6 characters long.");
-                }
-
-                // Prevent form submission if validation fails
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
-
-            // Function to load image preview
-            function loadImage() {
-                const image = document.getElementById("image").files[0];
-                if (image) {
-                    const imageUrl = URL.createObjectURL(image);
-                    document.getElementById("load-image").innerHTML = `<img src="${imageUrl}" alt="Preview">`;
-                } else {
-                    alert("Please select an image to load.");
-                }
-            }
-
-            // Set up image load button click handler
-            document.getElementById("load-image-btn").addEventListener("click", loadImage);
-        });
-    </script>
+    <link rel="stylesheet" href="/styles/default.css">
+    <script src="/js/services/auth-service.js"></script>
 </head>
 <body>
     <header>
         <h1>Tutor Finder</h1>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="./calendar.html">Calendar</a></li>
-                <li><a href="./profile.html">Profile</a></li>
-                <li><a href="signup.html">Sign Up</a></li>
-                <li><a href="login.html">Log In</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/calendar">Calendar</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <!-- Login/Signup/Logout links will be dynamically updated -->
             </ul>
         </nav>
     </header>
     <main>
         <div class="signup">
             <h2>Create profile</h2>
-            <p>or <a href="login.html">Sign In</a></p>
-            <form action="/api/auth/signup" method="POST" novalidate>
+            <p>or <a href="/login">Sign In</a></p>
+            <form onsubmit="event.preventDefault(); signup();" novalidate>
                 <div>
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName" placeholder="Norm">
+                    <label for="signup-firstName">First Name:</label>
+                    <input type="text" id="signup-firstName" name="firstName" placeholder="Norm">
                     <span class="error-message"></span>
                 </div>
                 <div>
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" placeholder="Niner">
+                    <label for="signup-lastName">Last Name:</label>
+                    <input type="text" id="signup-lastName" name="lastName" placeholder="Niner">
                     <span class="error-message"></span>
                 </div>
                 <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="norm@charlotte.edu">
+                    <label for="signup-email">Email:</label>
+                    <input type="email" id="signup-email" name="email" placeholder="norm@charlotte.edu">
                     <span class="error-message"></span>
                 </div>
                 <div>
                     <label>Image:</label>
-                    <input type="file" id="image">
+                    <input type="file" id="signup-image">
                     <button type="button" id="load-image-btn">CLICK HERE TO LOAD</button>
                     <div id="load-image"></div>
                 </div>
                 <div>
-                    <label for="year">Year:</label>
-                    <select name="year" id="year">
+                    <label for="signup-year">Year:</label>
+                    <select name="year" id="signup-year">
                         <option value="" selected disabled>Select Year</option>
-                        <option value="freshman">Freshman</option>
-                        <option value="sophomore">Sophomore</option>
-                        <option value="junior">Junior</option>
-                        <option value="senior">Senior</option>
+                        <option value="Freshman">Freshman</option>
+                        <option value="Sophomore">Sophomore</option>
+                        <option value="Junior">Junior</option>
+                        <option value="Senior">Senior</option>
                         <option value="Grad">Graduate Student</option>
                     </select>
                     <span class="error-message"></span>
                 </div>
                 <div>
-                    <label for="major">Major:</label>
-                    <select name="major" id="major">
+                    <label for="signup-major">Major:</label>
+                    <select name="major" id="signup-major">
                         <option value="" selected disabled>Select Major</option>
                         <option value="Accounting">Accounting</option>
                         <option value="Africana Studies">Africana Studies</option>
@@ -156,6 +73,7 @@
                         <option value="Child and Family Development">Child and Family Development</option>
                         <option value="Civil Engineering">Civil Engineering</option>
                         <option value="Communication Studies">Communication Studies</option>
+                        <option value="Computer Science">Computer Science</option>
                         <option value="Computer Engineering">Computer Engineering</option>
                         <option value="Construction Management">Construction Management</option>
                         <option value="Criminal Justice">Criminal Justice</option>
@@ -213,8 +131,8 @@
                     <span class="error-message"></span>
                 </div>
                 <div>
-                    <label for="bio">Bio (optional)</label>
-                    <textarea name="bio" id="bio" cols="30" rows="10"></textarea>
+                    <label for="signup-bio">Bio (optional)</label>
+                    <textarea name="bio" id="signup-bio" cols="30" rows="10"></textarea>
                 </div>
                 <div>
                     <label for="role">Role:</label>
@@ -223,8 +141,8 @@
                     <input type="checkbox" name="tutee" value="tutee"> Tutee
                 </div>
                 <div>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" placeholder="password123">
+                    <label for="signup-password">Password:</label>
+                    <input type="password" id="signup-password" name="password" placeholder="password123">
                     <span class="error-message"></span>
                 </div>
                 <br>
