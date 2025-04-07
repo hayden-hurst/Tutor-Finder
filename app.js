@@ -66,7 +66,7 @@ app.use('/api', authRoutes);
 app.get('/api/users', async (req, res) => {
     try {
         // Fetch all users from the database, excluding passwords
-        const users = await User.find().select('firstName lastName email'); // Only select the fields we need
+        const users = await User.find().select('firstName lastName email major'); // Only select the fields we need
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: 'Error retrieving users', message: err.message });
