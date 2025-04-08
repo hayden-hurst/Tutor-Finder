@@ -23,7 +23,7 @@
         <div class="signup">
             <h2>Create profile</h2>
             <p>or <a href="/login">Sign In</a></p>
-            <form onsubmit="event.preventDefault(); signup();" novalidate>
+            <form onsubmit="event.preventDefault(); signup();" enctype="multipart/form-data" novalidate>
                 <div>
                     <label for="signup-firstName">First Name:</label>
                     <input type="text" id="signup-firstName" name="firstName" placeholder="Norm">
@@ -41,7 +41,7 @@
                 </div>
                 <div>
                     <label>Image:</label>
-                    <input type="file" id="signup-image">
+                    <input type="file" id="signup-image" name="image">
                     <button type="button" id="load-image-btn">CLICK HERE TO LOAD</button>
                     <div id="load-image"></div>
                 </div>

@@ -1,18 +1,20 @@
 const express = require('express');
 const User = require('../models/users.js');
+const multer = require('../public/js/services/picture-upload');
+const upload = multer.single('image')
 
 const router = express.Router();
 
- router.post('/signup', async (req, res) => {
+ router.post('/signup', upload, async (req, res) => {
     try {
         const { firstName, lastName, email, password, major, year, bio } = req.body;
-
         // Check if user already exists
         if (await User.findOne({ email })) {
             return res.status(400).json({ error: 'User already exists' });
         }
 
-        const user = new User({ firstName, lastName, email, password, major, year, bio });  // Password will be hashed in the model
+        const profileImage = req.file ? '/uploads/' + req.file.filename : '';
+        const user = new User({ firstName, lastName, email, password, major, year, bio, profileImage });  
         await user.save();
 
         res.status(201).json({ message: 'User registered successfully' });

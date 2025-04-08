@@ -28,6 +28,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('user-major').textContent = user.major;
         document.getElementById('user-bio').textContent = user.bio;
 
+        // setting the users profile image
+        const profilePic = user.profileImage || '/images/Default_pfp.jpg';
+        const imgElement = document.querySelector('.profile-img img');
+            if (imgElement) {
+                imgElement.src = profilePic;
+            }
+
         // Default to not showing edit button unless confirmed it's the current user
         let isCurrentUser = false;
 

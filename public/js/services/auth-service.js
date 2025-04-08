@@ -143,19 +143,26 @@ async function signup(event) {
         return;
     }
 
-    const firstName = document.getElementById('signup-firstName').value;
-    const lastName = document.getElementById('signup-lastName').value;
-    const email = document.getElementById('signup-email').value;
-    const password = document.getElementById('signup-password').value;
-    const major = document.getElementById('signup-major').value;
-    const year = document.getElementById('signup-year').value;
-    const bio = document.getElementById('signup-bio').value;
+    // need to use FormData as sending the data as JSON doesnt support file uploads
+    const formData = new FormData();
+
+    formData.append('firstName', document.getElementById('signup-firstName').value);
+    formData.append('lastName', document.getElementById('signup-lastName').value);
+    formData.append('email', document.getElementById('signup-email').value);
+    formData.append('password', document.getElementById('signup-password').value);
+    formData.append('major', document.getElementById('signup-major').value);
+    formData.append('year', document.getElementById('signup-year').value);
+    formData.append('bio', document.getElementById('signup-bio').value);
+
+    const imageFile = document.getElementById('signup-image').files[0];
+    if (imageFile) {
+        formData.append('image', imageFile);
+    }
 
     try {
         const res = await fetch('/api/auth/signup', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ firstName, lastName, email, password, major, year, bio })
+            body: formData
         });
 
         const data = await res.json();
