@@ -8,3 +8,5 @@ const meetingSchema = new Schema ({
     date: { type: Date, required: [true, 'Date is required!']},
     time: { type: String, required: [true, 'Time is required!']}
 });
+
+module.exports = mongoose.model('Meeting', meetingSchema);
