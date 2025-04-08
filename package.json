@@ -6,9 +6,18 @@
     "express-session": "^1.18.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.13.0",
-    "mongoose": "^8.10.1"
+    "mongoose": "^8.10.1",
+    "multer": "^1.4.5-lts.2"
   },
   "scripts": {
     "start": "node app.js"
-  }
+  },
+  "name": "tutor-finder",
+  "description": "We will create a web application that connects students with available tutors. We will design and implement a frontend and backend for basic profile management, meeting scheduling, a messaging system that allows students and tutors to communicate directly with each other, a built-in calendar and cancelling or rescheduling meetings. The website will be designed to meet accessibility standards, following WCAG guidelines, and will be mobile compatible. Visual design will adhere to CRAP (Contrast, Repetition, Alignment, and Proximity) design principles, ensuring that the interface is aesthetically pleasing and functional. There will be no external funding and a strict timeline of three months to meet the project deadline.",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

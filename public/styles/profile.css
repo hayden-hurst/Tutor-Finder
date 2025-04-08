@@ -51,6 +51,30 @@ main {
     object-fit: cover; /* Ensures the image is properly contained within the circle */
 }
 
+/* Edit profile button styling */
+.edit-profile-btn {
+    display: none;
+    padding: 5px 10px;
+    background-color: black;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 750;
+    font-size: medium;
+    cursor: pointer;
+    transition: background-color 0.2s ease, bow-shadow 0.2s ease;
+}
+
+.edit-profile-btn:hover{
+    background-color: #005035;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.edit-profile-btn:focus{
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.3);
+}
+
 /* Upcoming Section */
 .upcoming {
     grid-column: 1;
