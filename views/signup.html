@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova software development project</title>
+    <link rel="stylesheet" href="/styles/default.css">
+    <script src="/js/services/auth-service.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Tutor Finder</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/calendar">Calendar</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <!-- Login/Signup/Logout links will be dynamically updated -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="signup">
+            <h2>Create profile</h2>
+            <p>or <a href="/login">Sign In</a></p>
+            <form onsubmit="event.preventDefault(); signup();" enctype="multipart/form-data" novalidate>
+                <div>
+                    <label for="signup-firstName">First Name:</label>
+                    <input type="text" id="signup-firstName" name="firstName" placeholder="Norm">
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="signup-lastName">Last Name:</label>
+                    <input type="text" id="signup-lastName" name="lastName" placeholder="Niner">
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="signup-email">Email:</label>
+                    <input type="email" id="signup-email" name="email" placeholder="norm@charlotte.edu">
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label>Image:</label>
+                    <input type="file" id="signup-image" name="image">
+                    <button type="button" id="load-image-btn">CLICK HERE TO LOAD</button>
+                    <div id="load-image"></div>
+                </div>
+                <div>
+                    <label for="signup-year">Year:</label>
+                    <select name="year" id="signup-year">
+                        <option value="" selected disabled>Select Year</option>
+                        <option value="Freshman">Freshman</option>
+                        <option value="Sophomore">Sophomore</option>
+                        <option value="Junior">Junior</option>
+                        <option value="Senior">Senior</option>
+                        <option value="Grad">Graduate Student</option>
+                    </select>
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="signup-major">Major:</label>
+                    <select name="major" id="signup-major">
+                        <option value="" selected disabled>Select Major</option>
+                        <option value="Accounting">Accounting</option>
+                        <option value="Africana Studies">Africana Studies</option>
+                        <option value="Anthropology">Anthropology</option>
+                        <option value="Architecture">Architecture</option>
+                        <option value="Art">Art</option>
+                        <option value="Biology">Biology</option>
+                        <option value="Business Administration">Business Administration</option>
+                        <option value="Business Analytics">Business Analytics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Child and Family Development">Child and Family Development</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                        <option value="Communication Studies">Communication Studies</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Computer Engineering">Computer Engineering</option>
+                        <option value="Construction Management">Construction Management</option>
+                        <option value="Criminal Justice">Criminal Justice</option>
+                        <option value="Dance">Dance</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Earth and Environmental Sciences">Earth and Environmental Sciences</option>
+                        <option value="Economics">Economics</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                        <option value="Electromechanical Engineering Technology">Electromechanical Engineering Technology</option>
+                        <option value="Elementary Education">Elementary Education</option>
+                        <option value="English">English</option>
+                        <option value="Environmental Engineering,">Environmental Engineering,</option>
+                        <option value="Environmental Studies">Environmental Studies</option>
+                        <option value="Exercise Science">Exercise Science</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Fire and Safety Engineering Technology">Fire and Safety Engineering Technology</option>
+                        <option value="French">French</option>
+                        <option value="Geography">Geography</option>
+                        <option value="Geology">Geology</option>
+                        <option value="German">German</option>
+                        <option value="Global Studies">Global Studies</option>
+                        <option value="Graphic Design">Graphic Design</option>
+                        <option value="Health Systems Management">Health Systems Management</option>
+                        <option value="History">History</option>
+                        <option value="Interdisciplinary Studies">Interdisciplinary Studies</option>
+                        <option value="International Business">International Business</option>
+                        <option value="Japanese Studies">Japanese Studies</option>
+                        <option value="Latin American Studies">Latin American Studies</option>
+                        <option value="Management">Management</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Mechanical Engineering Technology">Mechanical Engineering Technology</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Meteorology">Meteorology</option>
+                        <option value="Middle Grades Education">Middle Grades Education</option>
+                        <option value="Music">Music</option>
+                        <option value="Nursing">Nursing</option>
+                        <option value="Operations and Supply Chain Management">Operations and Supply Chain Management</option>
+                        <option value="Philosophy">Philosophy</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Political Science">Political Science</option>
+                        <option value="Professional Studies">Professional Studies</option>
+                        <option value="Psychology">Psychology</option>
+                        <option value="Public Health">Public Health</option>
+                        <option value="Religious Studies">Religious Studies</option>
+                        <option value="Respiratory Therapy">Respiratory Therapy</option>
+                        <option value="Social Work">Social Work</option>
+                        <option value="Sociology">Sociology</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="Special Education">Special Education</option>
+                        <option value="Systems Engineering">Systems Engineering</option>
+                        <option value="Theatre">Theatre</option>
+                        <option value="Writing">Writing</option>
+                    </select>
+                    <span class="error-message"></span>
+                </div>
+                <div>
+                    <label for="signup-bio">Bio (optional)</label>
+                    <textarea name="bio" id="signup-bio" cols="30" rows="10"></textarea>
+                </div>
+                <div>
+                    <label for="role">Role:</label>
+                    <input type="checkbox" name="tutor" value="tutor"> Tutor
+                    <br>
+                    <input type="checkbox" name="tutee" value="tutee"> Tutee
+                </div>
+                <div>
+                    <label for="signup-password">Password:</label>
+                    <input type="password" id="signup-password" name="password" placeholder="password123">
+                    <span class="error-message"></span>
+                </div>
+                <br>
+                <input type="submit" value="Create" class="button">
+            </form>
+        </div>
+    </main>
+    <footer></footer>
+</body>
+</html>

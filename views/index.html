@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova software development project</title>
+    <link rel="stylesheet" href="/styles/default.css">
+    <script src="/js/services/auth-service.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Tutor Finder</h1>
+        <nav>
+            <ul>
+                <!-- navbar links will be dynamically updated -->
+            </ul>
+        </nav>
+    </header>
+    
+    <!--Search bar-->
+    <div class="search-bar-container">
+        <input type="text" id="search-bar" placeholder="Search tutors..." class="search-bar">
+
+    </div>
+
+
+    <!--User List-->
+    <div class="user-list" id="user-list">
+
+        <div class="tutor">
+            <img >
+            <div class="tutor-info">
+                <span>Ashley</span>
+                <span>Business Management</span>
+                <span>Senior</span>
+            </div>
+        </div>
+    </div>
+
+    <!--Next/Prev buttons-->
+    <div class="pagination-controls">
+        <button id="prev-button" disabled>Prev</button>
+        <button id="next-button">Next</button>
+    </div>
+
+    <script src="/js/pages/user-list-loader.js"></script>
+    <script src="/js/ui/navbar-controller.js"></script> <!-- Dynamic navbar script -->
+</body>
+</html>
