@@ -24,3 +24,15 @@ Content-Type: application/json
     "password": "password123",
     "rememberMe": "false"
 }
+
+
+### Schedule Meeting
+POST http://localhost:3000/api/schedule-meeting
+Content-Content-Type: application/json
+
+{
+    "studentEmail": "ewurste1@charlotte.edu",
+    "tutorEmail": "test@uncc.edu",
+    "date": "2025-04-10T14:00:00Z",
+    "time": "2:00 PM"
+}

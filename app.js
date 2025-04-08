@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const authRoutes = require('./routes/auth-api');
 const profileRoutes = require('./routes/user-api');
+const meetingRoutes = require('./routes/scheduleMeeting');
 const MongoStore = require('connect-mongo');
 const path = require('path');
 const User = require('./models/users')
@@ -54,6 +55,7 @@ app.get('/calendar', isAuthenticated, (req, res) => res.sendFile(path.join(__dir
 // api routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', profileRoutes);
+app.use('/api', meetingRoutes);
 
 mongoose.connect(mongoUri)
 .then(() => {
