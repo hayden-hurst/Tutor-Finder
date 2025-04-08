@@ -66,7 +66,8 @@ router.get('/:id', authMiddleware, async (req, res) => {
             major: user.major,
             bio: user.bio,
             visibility: user.visibility || {},
-            email: isUser || user.visibility?.email !== false ? user.email : null
+            email: isUser || user.visibility?.email !== false ? user.email : null,
+            profileImage: user.profileImage || '/images/Default_pfp.jpg'
         };
 
         res.json(updatedUser);
