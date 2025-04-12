@@ -59,6 +59,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (editBtn) {
             editBtn.style.display = isCurrentUser ? 'inline-block' : 'none';
         }
+
+        // Show or hide schedule meeting button based on whether its the current user's profile
+        // Show or hide "Schedule Meeting" button
+        const scheduleContainer = document.getElementById("schedule-meeting-container");
+        if (scheduleContainer) {
+            scheduleContainer.classList.toggle("hidden", isCurrentUser); // hide if it's YOUR profile
+        }
+        
+
+        // Now that the DOM is populated, hook up the modal buttons
+        if (typeof initProfileEventListeners === 'function') {
+            initProfileEventListeners(); // this binds the modal open/close handlers
+        }
+
+
+
     } catch (error) {
         // Optionally log error or update an existing element
         console.error(error);

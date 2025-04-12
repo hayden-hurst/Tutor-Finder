@@ -213,6 +213,8 @@ async function login(event) {
 
         const data = await res.json();
         if (res.ok) {
+            localStorage.setItem("email", email); //save email 
+
             // Prevent multiple redirects
             if (!isRedirecting) {
                 isRedirecting = true;
@@ -235,6 +237,8 @@ async function login(event) {
 
 async function logout() {
     console.log("Logout function called");
+
+    localStorage.removeItem("email"); //delete email upon logout
 
     try {
         const res = await fetch('/api/auth/logout', {
