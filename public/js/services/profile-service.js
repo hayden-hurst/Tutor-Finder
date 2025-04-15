@@ -137,12 +137,13 @@ function openProfileEditor() {
 
 
     // Show the modal
-    document.querySelector('.modal-backdrop').style.display = 'flex';
+    document.querySelector('.modal-backdrop.edit-profile-modal')?.classList.remove("hidden");
+
 }
 
 function closeProfileEditor() {
     // Hide the modal
-    document.querySelector('.modal-backdrop').style.display = 'none';
+    document.querySelector('.modal-backdrop.edit-profile-modal')?.classList.add("hidden");
 
     // Clear any error messages
     document.querySelectorAll(".error-message").forEach(span => {
@@ -153,34 +154,74 @@ function closeProfileEditor() {
 
 // Event listener initialization
 function initProfileEventListeners() {
-    // Edit profile button
+    // === Edit Profile Modal ===
     const editProfileBtn = document.getElementById('edit-profile');
-    if (editProfileBtn) {
-        editProfileBtn.addEventListener('click', openProfileEditor);
+    const editModal = document.querySelector('.modal-backdrop.edit-profile-modal');
+    const closeEditBtn = editModal?.querySelector('.close-button');
+    const saveBtn = editModal?.querySelector('.save-info-btn');
+
+    if (editProfileBtn && editModal) {
+        editProfileBtn.addEventListener('click', () => {
+            console.log("Edit Profile Button Clicked!");
+            openProfileEditor(); // also sets the form fields
+        });
     }
 
-    // Close modal button
-    const closeBtn = document.querySelector('.close-button');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeProfileEditor);
+    if (closeEditBtn && editModal) {
+        closeEditBtn.addEventListener('click', () => {
+            editModal.classList.add('hidden');
+        });
     }
 
-    // Save info button
-    const saveBtn = document.querySelector('.save-info-btn');
     if (saveBtn) {
         saveBtn.addEventListener('click', saveInfo);
     }
 
-    // Modal backdrop click to close
-    const modalBackdrop = document.querySelector('.modal-backdrop');
-    if (modalBackdrop) {
-        modalBackdrop.addEventListener('click', function(event) {
-            if (event.target === modalBackdrop) {
-                closeProfileEditor();
+    // Close edit modal when clicking backdrop (but not inner content)
+    editModal?.addEventListener('click', (e) => {
+        if (e.target === editModal) {
+            editModal.classList.add('hidden');
+        }
+    });
+
+    // === Schedule Meeting Modal ===
+    const scheduleBtn = document.getElementById('schedule-meeting-btn');
+    const meetingModal = document.getElementById('meeting-modal');
+    const closeMeetingBtn = document.getElementById('close-meeting-modal');
+    const submitMeetingBtn = document.getElementById('submit-meeting');
+
+    if (scheduleBtn && meetingModal) {
+        scheduleBtn.addEventListener('click', () => {
+            console.log("Schedule Meeting Button Clicked!");
+            meetingModal.classList.remove('hidden');
+        });
+    }
+
+    if (closeMeetingBtn && meetingModal) {
+        closeMeetingBtn.addEventListener('click', () => {
+            meetingModal.classList.add('hidden');
+        });
+    }
+
+    if (submitMeetingBtn && meetingModal) {
+        submitMeetingBtn.addEventListener('click', () => {
+            const date = document.getElementById("meeting-date").value;
+            const time = document.getElementById("meeting-time").value;
+
+            //Still need to setup backend
+            if (date && time) {
+                meetingModal.classList.add('hidden');
+                alert(`Meeting scheduled for ${date} at ${time}`);
+            } else {
+                alert("Please fill out both date and time.");
             }
         });
     }
+
+    meetingModal?.addEventListener('click', (e) => {
+        if (e.target === meetingModal) {
+            meetingModal.classList.add('hidden');
+        }
+    });
 }
 
-// Initialize event listeners when DOM is fully loaded
-document.addEventListener("DOMContentLoaded", initProfileEventListeners);
