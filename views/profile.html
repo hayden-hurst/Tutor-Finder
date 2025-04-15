@@ -167,12 +167,12 @@
                         </div>
                         <span class="error-message"></span>
                     </div>
-                </form>
+                </form> 
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Schedule Meeting Modal -->
     <div class="modal-backdrop hidden" id="meeting-modal">
         <div class="modal-container">
             <div class="modal-header">
@@ -188,7 +188,21 @@
                     <div class="form-group">
                         <label for="meeting-time">Time</label>
                         <input type="time" id="meeting-time" required>
+                        <label for="meeting-duration">Duration In Minutes</label>
+                        <input type="text" id="meeting-duration" required>
                     </div>
+                    <div class="form-group" id="location-group">
+                        <input type="radio" name="location" id="in-person" value="In-Person" required>
+                        <label for="in-person">In-Person</label>
+                        <input type="radio" name="location" id="online" value="Online" required>
+                        <label for="online">Online</label>
+
+                        <div id="location-details-container" class="hidden">
+                            <label for="location-details">Enter Location Details</label>
+                            <input type="text" id="location-details" name="location-details">
+                        </div>
+                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
