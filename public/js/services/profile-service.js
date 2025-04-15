@@ -190,6 +190,12 @@ function initProfileEventListeners() {
     const closeMeetingBtn = document.getElementById('close-meeting-modal');
     const submitMeetingBtn = document.getElementById('submit-meeting');
 
+    const inPersonRadio = document.getElementById('in-person');
+    const onlineRadio = document.getElementById('online');
+    const locationDetailsContainer = document.getElementById('location-details-container');
+    const locationDetailsInput = document.getElementById('location-details');
+    
+
     if (scheduleBtn && meetingModal) {
         scheduleBtn.addEventListener('click', () => {
             console.log("Schedule Meeting Button Clicked!");
@@ -203,18 +209,25 @@ function initProfileEventListeners() {
         });
     }
 
+    //Submit meeting
     if (submitMeetingBtn && meetingModal) {
         submitMeetingBtn.addEventListener('click', () => {
             const date = document.getElementById("meeting-date").value;
             const time = document.getElementById("meeting-time").value;
+            const duration = document.getElementById("meeting-duration")?.value || '';
+            const selectedLocation = document.querySelector('input[name="location"]:checked');
 
             //Still need to setup backend
-            if (date && time) {
-                meetingModal.classList.add('hidden');
-                alert(`Meeting scheduled for ${date} at ${time}`);
-            } else {
-                alert("Please fill out both date and time.");
+            if (!date || !time || !duration || !selectedLocation) {
+                alert("Please fill out all required fields.");
+                return;
             }
+            if (selectedLocation.value === 'In-Person' && !locationDetailsInput.value.trim()) {
+                alert("Please provide a location for in-person meetings.");
+                return;
+            }
+            meetingModal.classList.add('hidden');
+            alert(`Meeting scheduled for ${date} at ${time}, ${selectedLocation.value}${selectedLocation.value === 'In-Person' ? ' at ' + locationDetailsInput.value : ''}`);
         });
     }
 
@@ -223,5 +236,19 @@ function initProfileEventListeners() {
             meetingModal.classList.add('hidden');
         }
     });
+    // Show/hide location detail input based on radio selection
+    if (inPersonRadio && onlineRadio && locationDetailsContainer) {
+        inPersonRadio.addEventListener('change', () => {
+            if (inPersonRadio.checked) {
+                locationDetailsContainer.classList.remove('hidden');
+            }
+        });
+
+        onlineRadio.addEventListener('change', () => {
+            if (onlineRadio.checked) {
+                locationDetailsContainer.classList.add('hidden');
+            }
+        });
+    }
 }
 
