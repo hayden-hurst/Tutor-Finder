@@ -211,27 +211,10 @@ function initProfileEventListeners() {
 
     //Submit meeting
     if (submitMeetingBtn && meetingModal) {
-        submitMeetingBtn.addEventListener('click', () => {
-            const date = document.getElementById("meeting-date").value;
-            const time = document.getElementById("meeting-time").value;
-            const duration = document.getElementById("meeting-duration")?.value || '';
-            const selectedLocation = document.querySelector('input[name="location"]:checked');
-
-            //Still need to setup backend
-            if (!date || !time || !duration || !selectedLocation) {
-                alert("Please fill out all required fields.");
-                return;
-            }
-            if (selectedLocation.value === 'In-Person' && !locationDetailsInput.value.trim()) {
-                alert("Please provide a location for in-person meetings.");
-                return;
-            }
-            meetingModal.classList.add('hidden');
-            alert(`Meeting scheduled for ${date} at ${time}, ${selectedLocation.value}${selectedLocation.value === 'In-Person' ? ' at ' + locationDetailsInput.value : ''}`);
-        });
+        submitMeetingBtn.addEventListener('click', submitMeeting);
     }
 
-    meetingModal?.addEventListener('click', (e) => {
+    meetingModal?.addEventListener('click', (e) => {    
         if (e.target === meetingModal) {
             meetingModal.classList.add('hidden');
         }
@@ -252,3 +235,49 @@ function initProfileEventListeners() {
     }
 }
 
+// === Handles Meeting Submission ===
+async function submitMeeting() {
+    const date = document.getElementById("meeting-date").value;
+    const time = document.getElementById("meeting-time").value;
+    const duration = document.getElementById("meeting-duration").value;
+    const selectedLocation = document.querySelector('input[name="location"]:checked');
+    const locationDetails = document.getElementById("location-details").value;
+    const tutorEmail = document.getElementById('user-email').textContent;
+
+    if (!date || !time || !duration || !selectedLocation) {
+        alert("Please fill out all required fields.");
+        return;
+    }
+
+    if (selectedLocation.value === 'In-Person' && !locationDetails.trim()) {
+        alert("Please provide a location for in-person meetings.");
+        return;
+    }
+
+    try {
+        const res = await fetch('/api/schedule-meeting', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                tutorEmail,
+                date,
+                time,
+                duration,
+                locationType: selectedLocation.value,
+                locationDetails
+            })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            document.getElementById('meeting-modal').classList.add('hidden');
+            alert("Meeting successfully scheduled!");
+        } else {
+            alert(data.error || "Failed to schedule meeting.");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Try again later.");
+    }
+}

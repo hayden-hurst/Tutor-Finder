@@ -26,13 +26,16 @@ Content-Type: application/json
 }
 
 
-### Schedule Meeting
+### Schedule Meeting Test
 POST http://localhost:3000/api/schedule-meeting
-Content-Content-Type: application/json
+Content-Type: application/json
+Cookie: connect.sid=s%3AEilDczHfMVilVfOpSpq-N0hr1ciya9P2.AGUv6Sby95ACkqk%2FdKEcH7dxQiXl5ZfrkFYxqbVOLKo	
 
 {
-    "studentEmail": "ewurste1@charlotte.edu",
-    "tutorEmail": "test@uncc.edu",
-    "date": "2025-04-10T14:00:00Z",
-    "time": "2:00 PM"
+  "tutorEmail": "tutor@example.com",
+  "date": "2025-04-20",
+  "time": "14:30",
+  "duration": 60,
+  "locationType": "In-Person",
+  "locationDetails": "At the library, Room 302"
 }
