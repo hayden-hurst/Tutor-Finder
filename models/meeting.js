@@ -1,12 +1,15 @@
+// models/meeting.js
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//Meeting schema
-const meetingSchema = new Schema ({
-    studentEmail: { type: String, required: [true, 'Student Email is required!']},
-    tutorEmail: { type: String, required: [true, 'Tutor Email is required!']},
-    date: { type: Date, required: [true, 'Date is required!']},
-    time: { type: String, required: [true, 'Time is required!']}
-});
+const meetingSchema = new Schema({
+    studentEmail: { type: String, required: true },
+    tutorEmail: { type: String, required: true },
+    date: { type: Date, required: true },
+    time: { type: String, required: true },
+    duration: { type: Number, required: true },
+    locationType: { type: String, enum: ['Online', 'In-Person'], required: true },
+    locationDetails: { type: String },
+}, { timestamps: true });
 
 module.exports = mongoose.model('Meeting', meetingSchema);
