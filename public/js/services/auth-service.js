@@ -306,3 +306,59 @@ function initAuthEventListeners() {
 
 // Initialize event listeners when DOM is fully loaded
 document.addEventListener("DOMContentLoaded", initAuthEventListeners);
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Function to load image preview
+    function loadImage() {
+        const image = document.getElementById("signup-image").files[0];
+        if (image) {
+            const imageUrl = URL.createObjectURL(image);
+            document.getElementById("load-image").innerHTML = `<img src="${imageUrl}" alt="Preview">`;
+        } else {
+            alert("Please select an image to load.");
+        }
+    }
+    // Set up image load button click handler
+    document.getElementById("load-image-btn").addEventListener("click", loadImage);
+
+    // Add time block
+    document.querySelectorAll('.add-time-block').forEach(button => {
+        button.addEventListener('click', () => {
+            const day = button.getAttribute('data-day');
+            const container = document.querySelector(`.availability-day[data-day="${day}"] .time-blocks`);
+
+            const block = document.createElement('div');
+            block.classList.add('time-block');
+            block.innerHTML = `
+                <input type="time" class="start-time" data-day="${day}">
+                <input type="time" class="end-time" data-day="${day}">
+                <button type="button" class="remove-block">Remove</button>
+            `;
+            container.appendChild(block);
+
+            // Allow removal
+            block.querySelector('.remove-block').addEventListener('click', () => {
+                block.remove();
+            });
+        });
+    });
+});
+
+function getAvailabilityData() {
+    const availability = [];
+
+    document.querySelectorAll('.availability-day').forEach(dayContainer => {
+        const day = dayContainer.getAttribute('data-day');
+        const blocks = dayContainer.querySelectorAll('.time-block');
+
+        blocks.forEach(block => {
+            const start = block.querySelector('.start-time').value;
+            const end = block.querySelector('.end-time').value;
+            if (start && end) {
+                availability.push({ day, start, end });
+            }
+        });
+    });
+
+    return availability;
+}
