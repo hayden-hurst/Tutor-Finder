@@ -12,6 +12,12 @@ const authMiddleware = (req, res, next) => {
     next();
 };
 
+// reusable date and time combination
+function combineDateAndTime(dateObj, timeStr) {
+    const datePart = dateObj instanceof Date ? dateObj.toISOString().split('T')[0] : dateObj;
+    return new Date(`${datePart}T${timeStr}`);
+}
+
 // POST /api/schedule-meeting
 router.post('/schedule-meeting', authMiddleware, async (req, res) => {
     try {
@@ -32,6 +38,43 @@ router.post('/schedule-meeting', authMiddleware, async (req, res) => {
             return res.status(400).json({ error: 'Location details required for in-person meetings' });
         }
 
+        // check for time conflicts
+
+        // convert date and time to a Date object for comparison
+        const meetingStart = new Date(`${date}T${time}`);
+        const meetingEnd = new Date(meetingStart.getTime() + duration * 60000); // duration is in minutes
+
+        // build start and end of the day for the query
+        const dayStart = new Date(date);
+        dayStart.setHours(0, 0, 0, 0);
+
+        const dayEnd = new Date(date);
+        dayEnd.setHours(23, 59, 59, 999);
+
+        // find any meetings for this tutor on the same day
+        const existingMeetings = await Meeting.find({
+            tutorEmail,
+            date: {
+                $gte: dayStart,
+                $lte: dayEnd
+            }
+        });
+
+        // check for overlap
+        const isOverlapping = existingMeetings.some(meeting => {
+            const existingStart = combineDateAndTime(meeting.date, meeting.time);
+            const existingEnd = new Date(existingStart.getTime() + meeting.duration * 60000);
+
+            return (
+                (meetingStart < existingEnd) && (meetingEnd > existingStart)
+            );
+        });
+
+        if (isOverlapping) {
+            return res.status(409).json({ error: 'This appointment overlaps with another scheduled appointment.' });
+        }
+
+        // no conflicts -> create meeting
         const newMeeting = new Meeting({
             studentEmail: student.email,
             tutorEmail,
@@ -41,6 +84,8 @@ router.post('/schedule-meeting', authMiddleware, async (req, res) => {
             locationType,
             locationDetails: locationType === 'In-Person' ? locationDetails : '',
         });
+
+
 
         await newMeeting.save();
 
