@@ -10,6 +10,8 @@ const meetingSchema = new Schema({
     duration: { type: Number, required: true },
     locationType: { type: String, enum: ['Online', 'In-Person'], required: true },
     locationDetails: { type: String },
+    startDateTime: { type: Date, required: true },
+    endDateTime: { type: Date, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Meeting', meetingSchema);

@@ -7,23 +7,23 @@ const meetingRoutes = require('./routes/scheduleMeeting');
 const MongoStore = require('connect-mongo');
 const path = require('path');
 const User = require('./models/users')
+require('dotenv').config()
 
 //test
 //const User = require('./models/users');
 
-let port = 3000;
-let host = 'localhost';
+let port = process.env.PORT || 3000;
+let host = process.env.HOST || 'localhost';
 let url = 'mongodb://localhost:27017/TutorApp'
 //app.set('view engine')
-const mongoUri = 'mongodb+srv://admin1:admin1@cluster0.htsmz.mongodb.net/TutorApp?retryWrites=true&w=majority&appName=Cluster0'
-
+const mongoUri = process.env.MONGO_URI
 // Middleware
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('public'));
 app.use(session({
-    secret: 'supersecretkey', // replace with process.env.SESSION_SECRET in production
+    secret: process.env.SESSION_SECRET, // replace with process.env.SESSION_SECRET in production
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({ mongoUrl: mongoUri }), // store sessions in MongoDB
