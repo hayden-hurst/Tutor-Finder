@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Meeting = require('../models/meeting');
 const User = require('../models/users');
+const { sendInitialConfirmation } = require('../utils/email-alerts');
 
 // Protect route
 const authMiddleware = (req, res, next) => {
@@ -42,7 +43,20 @@ router.post('/schedule-meeting', authMiddleware, async (req, res) => {
         });
 
         await newMeeting.save();
-        res.status(201).json({ message: 'Meeting successfully scheduled' });
+
+        // sends appointment email
+        await sendInitialConfirmation({
+            tutorEmail,
+            studentEmail: student.email,
+            date,
+            time,
+            duration,
+            locationType,
+            locationDetails,
+        });
+
+
+        res.status(201).json({ message: 'Meeting successfully scheduled and email successfully sent' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error while scheduling meeting' });
