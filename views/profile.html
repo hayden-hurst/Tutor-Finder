@@ -32,6 +32,7 @@
                 <p><strong>Email: </strong><span id="user-email"></span></p>
                 <p><strong>Year: </strong><span id="user-year"></span></p>
                 <p><strong>Major: </strong><span id="user-major"></span></p>
+                <p><strong>Role: </strong><span id="user-role"></span></p>
                 <p><strong>Bio: </strong><span id="user-bio"></span></p>
                 <button class="edit-profile-btn" id="edit-profile">Edit Profile</button>
             </div>
@@ -173,6 +174,71 @@
                         <div class="form-control">
                             <label>Bio</label>
                             <textarea name="bio" id="edit-bio" cols="30" rows="10"></textarea>
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-control">
+                            <label for="role">Role:</label>
+                            <input type="checkbox" name="tutor" value="tutor"> Tutor
+                            <input type="checkbox" name="tutee" value="tutee"> Tutee
+                        </div>
+                        <span class="error-message"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-control">
+                            <label for="availability-day">Availability:</label>
+                            <div class="availability-container">
+                                <div class="availability-day" data-day="Monday">
+                                    <label>Monday:</label>
+                                    <div class="time-blocks">
+                                        <!-- Time blocks will be inserted here -->
+                                    </div>
+                                    <button type="button" class="add-time-block" data-day="Monday">Add Time Block</button>
+                                </div>
+                                <div class="availability-day" data-day="Tuesday">
+                                    <label>Tuesday:</label>
+                                    <div class="time-blocks">
+                                        <!-- Time blocks will be inserted here -->
+                                    </div>
+                                    <button type="button" class="add-time-block" data-day="Tuesday">Add Time Block</button>
+                                </div>
+                                <div class="availability-day" data-day="Wednesday">
+                                    <label>Wednesday:</label>
+                                    <div class="time-blocks">
+                                        <!-- Time blocks will be inserted here -->
+                                    </div>
+                                    <button type="button" class="add-time-block" data-day="Wednesday">Add Time Block</button>
+                                </div>
+                                <div class="availability-day" data-day="Thursday">
+                                    <label>Thursday:</label>
+                                    <div class="time-blocks">
+                                        <!-- Time blocks will be inserted here -->
+                                    </div>
+                                    <button type="button" class="add-time-block" data-day="Thursday">Add Time Block</button>
+                                </div>
+                                <div class="availability-day" data-day="Friday">
+                                    <label>Friday:</label>
+                                    <div class="time-blocks">
+                                        <!-- Time blocks will be inserted here -->
+                                    </div>
+                                    <button type="button" class="add-time-block" data-day="Friday">Add Time Block</button>
+                                </div>
+                                <div class="availability-day" data-day="Saturday">
+                                    <label>Saturday:</label>
+                                    <div class="time-blocks">
+                                        <!-- Time blocks will be inserted here -->
+                                    </div>
+                                    <button type="button" class="add-time-block" data-day="Saturday">Add Time Block</button>
+                                </div>
+                                <div class="availability-day" data-day="Sunday">
+                                    <label>Sunday:</label>
+                                    <div class="time-blocks">
+                                        <!-- Time blocks will be inserted here -->
+                                    </div>
+                                    <button type="button" class="add-time-block" data-day="Sunday">Add Time Block</button>
+                                </div>
+                            </div>
                         </div>
                         <span class="error-message"></span>
                     </div>
