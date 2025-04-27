@@ -208,23 +208,23 @@ async function login(event) {
         const res = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password, rememberMe })
+            body: JSON.stringify({ email, password, rememberMe }),
+            credentials: 'same-origin'
         });
 
         const data = await res.json();
         if (res.ok) {
-            localStorage.setItem("email", email); //save email 
-
-            // Prevent multiple redirects
+            localStorage.setItem("email", email);
+            const redirectTo = new URLSearchParams(window.location.search).get('redirectTo') || '/';
+            console.log(redirectTo);
+            // Ensure that no multiple redirects happen
             if (!isRedirecting) {
                 isRedirecting = true;
-                // Add small delay to prevent potential race conditions
                 setTimeout(() => {
-                    window.location.href = '/profile';
-                }, 100);
+                    window.location.href = redirectTo; // Use the redirect URL from the server
+                }, 500);
             }
         } else {
-            // Show login error message
             const errorMessage = data.error || 'Login failed. Please check your credentials.';
             alert(errorMessage);
             console.log(errorMessage);
@@ -232,12 +232,13 @@ async function login(event) {
     } catch (error) {
         console.error('Login error:', error);
         alert('An error occurred during login. Please try again later.');
+    } finally {
+        // Reset the redirect flag in case of any errors or successful redirect
+        isRedirecting = false;
     }
 }
 
 async function logout() {
-    console.log("Logout function called");
-
     localStorage.removeItem("email"); //delete email upon logout
 
     try {
@@ -248,14 +249,7 @@ async function logout() {
 
         if (res.ok) {
             console.log("Logout successful, redirecting...");
-
-            // Reload the page to reflect changes
-            window.location.reload();
-
-            // Alternatively, redirect to login page for protected pages
-            if (window.location.pathname.includes('calendar') || window.location.pathname.includes('profile')) {
-                window.location.href = '/login';
-            }
+            window.location.href = '/login';
         } else {
             console.error("Logout failed with status:", res.status);
             alert("Logout failed. Please try again.");
@@ -302,26 +296,8 @@ function initAuthEventListeners() {
     if (loadImageBtn) {
         loadImageBtn.addEventListener("click", loadImagePreview);
     }
-}
 
-// Initialize event listeners when DOM is fully loaded
-document.addEventListener("DOMContentLoaded", initAuthEventListeners);
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Function to load image preview
-    function loadImage() {
-        const image = document.getElementById("signup-image").files[0];
-        if (image) {
-            const imageUrl = URL.createObjectURL(image);
-            document.getElementById("load-image").innerHTML = `<img src="${imageUrl}" alt="Preview">`;
-        } else {
-            alert("Please select an image to load.");
-        }
-    }
-    // Set up image load button click handler
-    document.getElementById("load-image-btn").addEventListener("click", loadImage);
-
-    // Add time block
+    // Add time block events (after DOM is fully loaded)
     document.querySelectorAll('.add-time-block').forEach(button => {
         button.addEventListener('click', () => {
             const day = button.getAttribute('data-day');
@@ -342,7 +318,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
-});
+}
+
+// Initialize event listeners when DOM is fully loaded
+document.addEventListener("DOMContentLoaded", initAuthEventListeners);
 
 function getAvailabilityData() {
     const availability = [];

@@ -25,7 +25,7 @@ app.use(express.static('public'));
 app.use(session({
     secret: process.env.SESSION_SECRET, // replace with process.env.SESSION_SECRET in production
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store: new MongoStore({ mongoUrl: mongoUri }), // store sessions in MongoDB
     cookie: { secure: false } // not secured for local development
 }));
@@ -41,8 +41,9 @@ const isAuthenticated = (req, res, next) => {
         return res.status(401).json({ error: 'Unauthorized: Please log in' });
     }
 
-    // For HTML page requests, redirect to login
-    res.redirect('/login');
+    // For HTML page requests, redirect to login with the original attempted URL
+    const redirectTo = req.originalUrl; // Get the protected route the user attempted to access
+    res.redirect(`/login?redirectTo=${encodeURIComponent(redirectTo)}`); // Pass the redirect URL as a query parameter
 };
 
 // page routes
