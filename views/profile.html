@@ -55,6 +55,10 @@
                 <h2>Edit Profile</h2>
                 <button class="close-button" aria-label="Close">&times;</button>
             </div>
+            
+            <div class="modal-footer">
+                <button type="submit" class="save-info-btn">Save Changes</button>
+            </div>
             <div class='modal-content'>
                 <form onsubmit="event.preventDefault(); saveInfo();" novalidate>
                     <div class="form-group">
@@ -185,6 +189,7 @@
                         </div>
                         <span class="error-message"></span>
                     </div>
+                    
                     <div class="form-group">
                         <div class="form-control">
                             <label for="availability-day">Availability:</label>
@@ -241,8 +246,11 @@
                             </div>
                         </div>
                         <span class="error-message"></span>
+                        
                     </div>
+                    
                 </form> 
+                
             </div>
         </div>
     </div>
