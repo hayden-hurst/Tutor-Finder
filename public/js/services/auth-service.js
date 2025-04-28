@@ -260,17 +260,6 @@ async function logout() {
     }
 }
 
-// Image Preview Function
-function loadImagePreview() {
-    const image = document.getElementById("image").files[0];
-    if (image) {
-        const imageUrl = URL.createObjectURL(image);
-        document.getElementById("load-image").innerHTML = `<img src="${imageUrl}" alt="Preview">`;
-    } else {
-        alert("Please select an image to load.");
-    }
-}
-
 // Event Listeners Initialization
 function initAuthEventListeners() {
     // Signup form submit event
@@ -341,3 +330,45 @@ function getAvailabilityData() {
 
     return availability;
 }
+
+// loads the image preview when the user selects an image
+document.addEventListener('DOMContentLoaded', function () {
+    const imageInput = document.getElementById('signup-image');
+    const imageContainer = document.getElementById('load-image');
+
+    if (!imageInput || !imageContainer) {
+        console.error('Image input or container not found.');
+        return;
+    }
+
+    imageInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                let img = imageContainer.querySelector('img');
+
+                // If an img element doesn't exist yet, create one
+                if (!img) {
+                    img = document.createElement('img');
+                    img.style.maxWidth = '300px';
+                    img.style.maxHeight = '300px';
+                    img.alt = 'Selected Image';
+                    imageContainer.appendChild(img);
+                }
+
+                // Always update the img src
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+        else {
+            // If no file selected, remove image preview
+            const img = imageContainer.querySelector('img');
+            if (img) {
+                img.remove();
+            }
+        }
+    });
+});
