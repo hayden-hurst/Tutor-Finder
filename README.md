@@ -7,6 +7,4 @@ We will create a web application that connects students with available tutors. W
 3. Fill out the .env with all the proper environment variables
 4. Run **node app.js** to start the server
 5. The server is now running and you can use the web app.
-
-2/17/25
-The team has completed the project setup for sprint 0. We are now working on Sprint 1 which will create the base website layout/designs as well as some functionalities such as securing passwords and being able to create an account.
+6. Make sure to remember the email you use to sign up with and the password. There is no "forgot password" or "forgot email" feature.
