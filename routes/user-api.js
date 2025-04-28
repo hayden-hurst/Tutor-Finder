@@ -67,7 +67,8 @@ router.get('/:id', authMiddleware, async (req, res) => {
             bio: user.bio,
             visibility: user.visibility || {},
             email: isUser || user.visibility?.email !== false ? user.email : null,
-            profileImage: user.profileImage || '/images/Default_pfp.jpg'
+            profileImage: user.profileImage || '/images/Default_pfp.jpg',
+            availability: user.availability || []
         };
 
         res.json(updatedUser);
