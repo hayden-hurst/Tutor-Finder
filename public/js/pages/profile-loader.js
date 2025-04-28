@@ -35,6 +35,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 imgElement.src = profilePic;
             }
 
+        // displays the users availability on their profile page
+        const availabilityContainer = document.getElementById('user-availability');
+        if (availabilityContainer && Array.isArray(user.availability)) {
+            for (const time of user.availability) {
+                availabilityContainer.innerHTML += `<p>${time.day}: ${time.start} - ${time.end}</p>`;
+            }
+        }
+
         // Default to not showing edit button unless confirmed it's the current user
         let isCurrentUser = false;
 
