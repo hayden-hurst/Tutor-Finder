@@ -76,6 +76,7 @@ async function saveInfo(event){
                 major,
                 year,
                 bio,
+                availability,
                 visibility: { email: emailVisible }
             })
         });

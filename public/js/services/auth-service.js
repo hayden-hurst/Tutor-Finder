@@ -153,6 +153,8 @@ async function signup(event) {
     formData.append('major', document.getElementById('signup-major').value);
     formData.append('year', document.getElementById('signup-year').value);
     formData.append('bio', document.getElementById('signup-bio').value);
+    const availability = getAvailabilityData();
+    formData.append('availability', JSON.stringify(availability));
 
     const imageFile = document.getElementById('signup-image').files[0];
     if (imageFile) {

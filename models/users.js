@@ -23,7 +23,12 @@ const userSchema = new Schema ({
     },
     visibility: { // visibility property will allow the selected fields to be hidden on the page
         email: {type: Boolean, default: true}
-    }
+    },
+    availability: [{
+        day: {type: String, required: true },
+        start: {type: String, required: true },
+        end: {type: String, required: true }
+    }],
 });
 
 // Password Hashing
