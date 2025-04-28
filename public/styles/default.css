@@ -302,3 +302,10 @@ a {
     text-align: center; 
 }
 
+.availability-container {
+    margin-left: 20px; 
+}
+
+.availability-day {
+    margin-bottom: 5px;
+}
