@@ -30,11 +30,11 @@ router.get('/me', authMiddleware, async (req, res) => {
 // route used to edit the info of the user logged into the current session
 router.patch('/me', authMiddleware, async (req, res) => {
     try {
-        const { firstName, lastName, major, year, bio, visibility } = req.body;
+        const { firstName, lastName, major, year, bio, availability, visibility } = req.body;
 
         const updatedUser = await User.findByIdAndUpdate(
             req.session.userId, // <--- use this directly
-            { firstName, lastName, major, year, bio, visibility },
+            { firstName, lastName, major, year, bio, availability, visibility },
             { new: true, runValidators: true }
         );
 
