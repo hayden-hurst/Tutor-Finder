@@ -42,6 +42,10 @@ router.post('/login', async (req, res) => {
 
         // Store user info in session
         req.session.userId = user._id;
+        req.session.user = {
+            email: user.email,
+            _id: user._id
+          };
         req.session.cookie.maxAge = rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000;
 
         //Send response

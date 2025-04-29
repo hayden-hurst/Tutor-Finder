@@ -9,6 +9,7 @@ const path = require('path');
 const User = require('./models/users')
 require('dotenv').config()
 
+
 //test
 //const User = require('./models/users');
 
@@ -29,6 +30,8 @@ app.use(session({
     store: new MongoStore({ mongoUrl: mongoUri }), // store sessions in MongoDB
     cookie: { secure: false } // not secured for local development
 }));
+const meetingsRoutes = require('./routes/meetings');
+app.use('/api/meetings', meetingsRoutes);
 
 const isAuthenticated = (req, res, next) => {
     // Check for authentication

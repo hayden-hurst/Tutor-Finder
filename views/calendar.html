@@ -189,7 +189,11 @@
                 for (let day = 1; day <= daysInMonth; day++) {
                     let dateElement = document.createElement('div');
                     dateElement.classList.add('date');
-                    let fullDate = `${year}-${month + 1}-${day}`;
+                    //Padded because dates are saved in DB as 2025-04-30 (instead of 2025-4-30)
+                    let paddedMonth = (month + 1).toString().padStart(2, '0');
+                    let paddedDay = day.toString().padStart(2, '0');
+                    let fullDate = `${year}-${paddedMonth}-${paddedDay}`;
+
 
                     let dayNumber = document.createElement('span');
                     dayNumber.textContent = day;
@@ -244,7 +248,33 @@
             
             populateTimeDropdown(document.getElementById('eventStartTime'));
             populateTimeDropdown(document.getElementById('eventEndTime'));
-            renderCalendar();
+            fetchMeetings();
+
+            async function fetchMeetings() {
+                try {
+                    const res = await fetch('/api/meetings/mine', { credentials: 'include' });
+                    const data = await res.json();
+
+                    data.forEach(meeting => {
+                    if (!events[meeting.date]) {
+                        events[meeting.date] = [];
+                    }
+
+                    events[meeting.date].push({
+                        title: meeting.title,
+                        location: meeting.location,
+                        start: meeting.start,
+                        end: meeting.end
+                    });
+                    });
+
+                    renderCalendar();
+                } catch (err) {
+                    console.error("Failed to fetch meetings:", err);
+                }
+            }
+
+
         </script>
         <script src="/js/ui/navbar-controller.js"></script> <!-- Dynamic navbar script -->
     </body>

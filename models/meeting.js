@@ -14,4 +14,5 @@ const meetingSchema = new Schema({
     endDateTime: { type: Date, required: true },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Meeting', meetingSchema);
+module.exports = mongoose.models.Meeting || mongoose.model('Meeting', meetingSchema);
+
