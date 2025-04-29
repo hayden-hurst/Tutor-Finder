@@ -29,12 +29,13 @@ document.addEventListener('DOMContentLoaded', () => {
             tutorDiv.classList.add('tutor');
             tutorDiv.innerHTML = `
                 <div class="tutor-info">
-                <a href="profile?userId=${user._id}">
-                    ${user.firstName} ${user.lastName}
-                </a>
-            <span>${user.email}</span>
-        </div>
-    `;
+                    <a href="profile?userId=${user._id}">
+                        ${user.firstName} ${user.lastName}
+                    </a>
+                    <span>${user.email}</span>
+                    <span>${user.major}</span>
+                </div>
+            `;
             userList.appendChild(tutorDiv);
         });
     }
@@ -69,7 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const filteredUsers = allUsers.filter(user =>
             user.firstName.toLowerCase().includes(searchTerm) || 
             user.lastName.toLowerCase().includes(searchTerm) || 
-            user.email.toLowerCase().includes(searchTerm)
+            user.email.toLowerCase().includes(searchTerm) ||
+            user.major.toLowerCase().includes(searchTerm)
         );
         renderUsers(filteredUsers);
         updatePagination();
