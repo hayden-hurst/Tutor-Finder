@@ -49,6 +49,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
+        //Roles
+        document.getElementById('user-role').textContent = [
+            user.roles?.tutor ? 'Tutor' : null,
+            user.roles?.tutee ? 'Tutee' : null
+        ].filter(Boolean).join(', ') || "No role selected";
+
+
         // Default to not showing edit button unless confirmed it's the current user
         let isCurrentUser = false;
 

@@ -161,6 +161,14 @@ async function signup(event) {
         formData.append('image', imageFile);
     }
 
+    const tutorChecked = document.querySelector('input[name="tutor"]').checked;
+    const tuteeChecked = document.querySelector('input[name="tutee"]').checked;
+
+    formData.append('tutor', tutorChecked);
+    formData.append('tutee', tuteeChecked);
+
+
+
     try {
         const res = await fetch('/api/auth/signup', {
             method: 'POST',

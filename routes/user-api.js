@@ -14,7 +14,7 @@ const authMiddleware = (req, res, next) => {
 router.get('/list', async (req, res) => {
     try {
         // Fetch all users from the database, excluding passwords
-        const users = await User.find().select('firstName lastName email major'); // Only select the fields we need
+        const users = await User.find().select('firstName lastName email major roles'); // Only select the fields we need
         res.json(users);
     } catch (err) {
         res.status(500).json({ error: 'Error retrieving users', message: err.message });
@@ -30,13 +30,14 @@ router.get('/me', authMiddleware, async (req, res) => {
 // route used to edit the info of the user logged into the current session
 router.patch('/me', authMiddleware, async (req, res) => {
     try {
-        const { firstName, lastName, major, year, bio, availability, visibility } = req.body;
+        const { firstName, lastName, major, year, bio, availability, visibility, roles } = req.body;
 
         const updatedUser = await User.findByIdAndUpdate(
             req.session.userId, // <--- use this directly
-            { firstName, lastName, major, year, bio, availability, visibility },
+            { firstName, lastName, major, year, bio, availability, visibility, roles },
             { new: true, runValidators: true }
         );
+
 
         if (!updatedUser) {
             return res.status(404).json({ error: 'User not found' });
@@ -66,6 +67,7 @@ router.get('/:id', authMiddleware, async (req, res) => {
             major: user.major,
             bio: user.bio,
             visibility: user.visibility || {},
+            roles: user.roles || {},
             email: isUser || user.visibility?.email !== false ? user.email : null,
             profileImage: user.profileImage || '/images/Default_pfp.jpg',
             availability: user.availability || []

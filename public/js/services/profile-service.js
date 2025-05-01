@@ -65,6 +65,11 @@ async function saveInfo(event){
     const year = document.getElementById('edit-year').value;
     const bio = document.getElementById('edit-bio').value;
     const emailVisible = document.getElementById('show-email')?.checked;
+    const selectedRoles = {
+        tutor: document.getElementById("role-tutor").checked,
+        tutee: document.getElementById("role-tutee").checked
+
+    } 
 
     try {
         const res = await fetch('/api/users/me', {
@@ -77,7 +82,8 @@ async function saveInfo(event){
                 year,
                 bio,
                 availability: getAvailabilityData(),
-                visibility: { email: emailVisible }
+                visibility: { email: emailVisible },
+                roles: selectedRoles
             })
         });
 
@@ -135,11 +141,11 @@ function openProfileEditor() {
 
     document.getElementById('edit-bio').value = bio;
     document.getElementById('show-email').checked = document.getElementById('user-email').textContent !== "[Hidden]";
-
+    document.querySelector('input[name="tutor"]').checked = document.getElementById('user-role').textContent.includes('Tutor');
+    document.querySelector('input[name="tutee"]').checked = document.getElementById('user-role').textContent.includes('Tutee');
 
     // Show the modal
     document.querySelector('.modal-backdrop.edit-profile-modal')?.classList.remove("hidden");
-
 }
 
 function closeProfileEditor() {

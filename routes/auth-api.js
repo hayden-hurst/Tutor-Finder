@@ -9,6 +9,8 @@ const router = express.Router();
     try {
         const { firstName, lastName, email, password, major, year, bio } = req.body;
         const availability = JSON.parse(req.body.availability); 
+        const roles = { tutor: req.body.tutor === 'true', tutee: req.body.tutee === 'true'};
+          
         // Check if user already exists
         if (await User.findOne({ email })) {
             return res.status(400).json({ error: 'User already exists' });
@@ -16,7 +18,7 @@ const router = express.Router();
 
         const profileImage = req.file ? '/uploads/' + req.file.filename : '';        
 
-        const user = new User({ firstName, lastName, email, password, major, year, bio, availability, profileImage });  
+        const user = new User({ firstName, lastName, email, password, major, year, bio, availability, profileImage, roles });  
         await user.save();
 
         res.status(201).json({ message: 'User registered successfully' });

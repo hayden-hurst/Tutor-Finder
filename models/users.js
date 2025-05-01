@@ -29,6 +29,10 @@ const userSchema = new Schema ({
         start: {type: String, required: true },
         end: {type: String, required: true }
     }],
+    roles: {
+        tutor: { type: Boolean, default: false },
+        tutee: { type: Boolean, default: false }
+      }      
 });
 
 // Password Hashing
