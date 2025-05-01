@@ -255,6 +255,19 @@ async function submitMeeting() {
         return;
     }
 
+    // Validate Tutor Availability
+    if (!window.tutorAvailability || !Array.isArray(window.tutorAvailability)) {
+        alert("Cannot validate availability. Try refreshing the page.");
+        return;
+    }
+    
+    if (!isTimeWithinAvailability(window.tutorAvailability, date, time, parseInt(duration))) {
+        alert("This time is outside the tutor's availability.");
+        return;
+    }
+    
+
+    //Schedule Meeting
     try {
         const res = await fetch('/api/schedule-meeting', {
             method: 'POST',
@@ -282,3 +295,25 @@ async function submitMeeting() {
         alert("Something went wrong. Try again later.");
     }
 }
+
+
+//Check availability
+function isTimeWithinAvailability(availability, dateStr, timeStr, durationMins) {
+    const day = new Date(dateStr).toLocaleString('en-US', { weekday: 'long', timeZone: 'UTC' });
+
+    const meetingStart = new Date(`${dateStr}T${timeStr}`);
+    const meetingEnd = new Date(meetingStart.getTime() + durationMins * 60000);
+
+    const dayBlocks = availability.filter(block => block.day === day);
+
+    return dayBlocks.some(block => {
+        const [startHour, startMin] = block.start.split(':').map(Number);
+        const [endHour, endMin] = block.end.split(':').map(Number);
+
+        const blockStart = new Date(`${dateStr}T${block.start}`);
+        const blockEnd = new Date(`${dateStr}T${block.end}`);
+
+        return meetingStart >= blockStart && meetingEnd <= blockEnd;
+    });
+}
+

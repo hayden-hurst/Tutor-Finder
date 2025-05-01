@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         const user = await response.json();
         const visibility = user.visibility || {};
 
+        //Availability check
+        if (user.availability && Array.isArray(user.availability)) {
+            window.tutorAvailability = user.availability; 
+        }
+        
+
         const isUser = !userId || userId === user._id; // checks if the userId of a profile matches the database entry for that user
 
         document.getElementById('user-fname').textContent = user.firstName
