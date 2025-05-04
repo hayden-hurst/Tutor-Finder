@@ -36,9 +36,25 @@ body {
 	flex-direction: column; 
 	align-items: flex-start; 
 }
-.date { 
-	min-height: 100px; 
-	transition: min-height 0.3s ease; 
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 equal columns */
+    grid-auto-rows: auto; /* Rows grow based on tallest cell */
+}
+.date {
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-sizing: border-box;
+    min-height: 100px; /* Optional base height */
+	overflow: hidden;        /* Prevents overflow */
+    word-wrap: break-word;   /* Wraps long words */
+    word-break: break-word;  /* Breaks long words anywhere if needed */
+}
+.event {
+    width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;     /* Allows wrapping */
 }
 .day { 
 	font-weight: bold; 
