@@ -15,3 +15,4 @@ We will create a web application that connects students with available tutors. W
 ## Future Improvements
 - Add account email verification for signup to prevent unauthorized account creation
 - Live chat system
+- AI assistant
