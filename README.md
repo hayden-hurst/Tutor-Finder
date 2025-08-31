@@ -8,3 +8,10 @@ We will create a web application that connects students with available tutors. W
 4. Run **node app.js** to start the server
 5. The server is now running and you can use the web app.
 6. Make sure to remember the email you use to sign up with and the password. There is no "forgot password" or "forgot email" feature.
+
+## Currently Working On
+- Code cleanup and documentation
+
+## Future Improvements
+- Add account email verification for signup to prevent unauthorized account creation
+- Live chat system
